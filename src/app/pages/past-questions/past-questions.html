@@ -1,0 +1,106 @@
+
+<div class="pq-page">
+
+  <!-- =========================
+       PAGE HEADER
+  ========================== -->
+
+  <section class="pq-hero">
+
+    <div class="hero-content">
+
+      <span class="hero-label">
+        JAMB300+ • PRACTICE
+      </span>
+
+      <h1>
+        Past Questions
+      </h1>
+
+      <p>
+        Practice JAMB past questions by year and prepare
+        with confidence for your examination.
+      </p>
+
+    </div>
+
+    <div class="hero-icon">
+      <span>?</span>
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       YEAR SECTION
+  ========================== -->
+
+  <section class="years-section">
+
+    <div class="section-header">
+
+      <div>
+
+        <span class="section-label">
+          PAST QUESTIONS
+        </span>
+
+        <h2>
+          Select a Year
+        </h2>
+
+        <p>
+          Choose a JAMB examination year to continue.
+        </p>
+
+      </div>
+
+      <div class="year-total">
+        {{ years.length }} Years
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         YEARS GRID
+    ========================== -->
+
+    <div class="years-grid">
+
+      @for (year of years; track year) {
+
+        <button
+          type="button"
+          class="year-card"
+          [routerLink]="['/pq-subjects', year]">
+
+          <div class="year-icon">
+            📚
+          </div>
+
+          <div class="year-info">
+
+            <span>
+              JAMB
+            </span>
+
+            <strong>
+              {{ year }}
+            </strong>
+
+          </div>
+
+          <div class="year-arrow">
+            →
+          </div>
+
+        </button>
+
+      }
+
+    </div>
+
+  </section>
+
+</div>

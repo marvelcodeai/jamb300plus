@@ -1,0 +1,440 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* =====================================================
+   GLOBAL VARIABLES
+===================================================== */
+
+:root {
+  --navy: #0A2342;
+  --gold: #FFB400;
+  --white: #FFFFFF;
+
+  --page-bg: #FFFFFF;
+  --card: #F5F5F5;
+  --surface: #FFFFFF;
+
+  --text: #172033;
+  --muted: #6B7280;
+  --border: #E5E7EB;
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   HTML
+===================================================== */
+
+html {
+  scroll-behavior: smooth;
+  min-height: 100%;
+  background: var(--page-bg);
+}
+
+
+/* =====================================================
+   BODY
+===================================================== */
+
+body {
+  min-height: 100vh;
+
+  font-family:
+    'Inter',
+    sans-serif;
+
+  background: var(--page-bg);
+  color: var(--text);
+
+  transition:
+    background-color .3s ease,
+    color .3s ease;
+}
+
+
+/* =====================================================
+   ANGULAR ROOT
+===================================================== */
+
+app-root {
+  display: block;
+  min-height: 100vh;
+}
+
+
+/* =====================================================
+   GLOBAL LIGHT THEME
+===================================================== */
+
+html.light-theme {
+  --page-bg: #FFFFFF;
+  --surface: #FFFFFF;
+  --card: #F5F5F5;
+
+  --text: #172033;
+  --muted: #6B7280;
+  --border: #E5E7EB;
+
+  background: #FFFFFF;
+}
+
+html.light-theme body {
+  background: #FFFFFF;
+  color: #172033;
+}
+
+
+/* =====================================================
+   GLOBAL DARK THEME
+===================================================== */
+
+html.dark-theme {
+  --page-bg: #071525;
+  --surface: #0D1F35;
+  --card: #122842;
+
+  --text: #FFFFFF;
+  --muted: #A0B4D0;
+  --border: rgba(255, 255, 255, 0.09);
+
+  background: #071525;
+
+  color-scheme: dark;
+}
+
+html.dark-theme body {
+  background: #071525;
+  color: #FFFFFF;
+}
+
+
+/* =====================================================
+   GLOBAL DARK THEME — COMMON ELEMENTS
+===================================================== */
+
+html.dark-theme app-root,
+html.dark-theme main,
+html.dark-theme section,
+html.dark-theme article {
+  background-color: transparent;
+}
+
+
+/* =====================================================
+   GLOBAL TRANSITIONS
+===================================================== */
+
+html,
+body,
+app-root,
+main,
+section,
+article,
+div {
+  transition:
+    background-color .3s ease,
+    color .3s ease,
+    border-color .3s ease;
+}
+
+
+/* =====================================================
+   FORM ELEMENTS
+===================================================== */
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+button {
+  cursor: pointer;
+}
+
+
+/* =====================================================
+   LINKS
+===================================================== */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* =====================================================
+   INPUTS — LIGHT
+===================================================== */
+
+input,
+textarea,
+select {
+  background: #FFFFFF;
+  color: #172033;
+  border-color: #E5E7EB;
+}
+
+
+/* =====================================================
+   INPUTS — DARK
+===================================================== */
+
+html.dark-theme input,
+html.dark-theme textarea,
+html.dark-theme select {
+  background: #0D1F35;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+
+/* =====================================================
+   PLACEHOLDER — DARK
+===================================================== */
+
+html.dark-theme input::placeholder,
+html.dark-theme textarea::placeholder {
+  color: #7890AD;
+}
+
+
+/* =====================================================
+   SELECT OPTIONS — DARK
+===================================================== */
+
+html.dark-theme select option {
+  background: #0D1F35;
+  color: #FFFFFF;
+}
+
+
+/* =====================================================
+   TEXT SELECTION
+===================================================== */
+
+::selection {
+  background: #FFB400;
+  color: #0A2342;
+}
+
+
+/* =====================================================
+   REMOVE DEFAULT OUTLINE
+===================================================== */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #FFB400;
+  outline-offset: 2px;
+}
+
+
+/* =====================================================
+   SCROLLBAR
+   Keep scrolling functional but remove ugly scrollbar
+===================================================== */
+
+html {
+  scrollbar-width: none;
+}
+
+body {
+  scrollbar-width: none;
+}
+
+
+/* Chrome / Edge / Safari */
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+
+/* =====================================================
+   DARK MODE SCROLLBAR
+===================================================== */
+
+html.dark-theme {
+  scrollbar-color: transparent transparent;
+}
+
+
+/* =====================================================
+   LIGHT MODE SCROLLBAR
+===================================================== */
+
+html.light-theme {
+  scrollbar-color: transparent transparent;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+  html,
+  body {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+
+}
+
+
+/* =====================================================
+   PREVENT HORIZONTAL SCROLL
+===================================================== */
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+
+/* =====================================================
+   DARK MODE — PAGE BACKGROUNDS
+===================================================== */
+
+html.dark-theme .page-container,
+html.dark-theme .settings-page {
+  background: #071525;
+}
+
+
+/* =====================================================
+   DARK MODE — WHITE CARDS
+===================================================== */
+
+html.dark-theme .card,
+html.dark-theme .settings-card,
+html.dark-theme .profile-card,
+html.dark-theme .security-card,
+html.dark-theme .appearance-card,
+html.dark-theme .goal-card,
+html.dark-theme .state-card,
+html.dark-theme .message-card {
+  background: #0D1F35;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+
+/* =====================================================
+   DARK MODE — TEXT
+===================================================== */
+
+html.dark-theme h1,
+html.dark-theme h2,
+html.dark-theme h3,
+html.dark-theme h4,
+html.dark-theme h5,
+html.dark-theme h6 {
+  color: #FFFFFF;
+}
+
+
+/* =====================================================
+   DARK MODE — MUTED TEXT
+===================================================== */
+
+html.dark-theme p,
+html.dark-theme small {
+  color: #A0B4D0;
+}
+
+
+/* =====================================================
+   DARK MODE — COMMON WHITE BACKGROUNDS
+===================================================== */
+
+html.dark-theme .content,
+html.dark-theme .content-area,
+html.dark-theme .dashboard,
+html.dark-theme .dashboard-page {
+  background: #071525;
+}
+
+
+/* =====================================================
+   DARK MODE — TOPBAR
+===================================================== */
+
+html.dark-theme .topbar {
+  background: #0D1F35;
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+
+/* =====================================================
+   DARK MODE — TABLES
+===================================================== */
+
+html.dark-theme table {
+  color: #FFFFFF;
+}
+
+html.dark-theme th,
+html.dark-theme td {
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+
+/* =====================================================
+   DARK MODE — COMMON CARD BACKGROUND
+===================================================== */
+
+html.dark-theme [class*="card"] {
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+
+/* =====================================================
+   DARK MODE — DISABLED
+===================================================== */
+
+html.dark-theme button:disabled,
+html.dark-theme input:disabled,
+html.dark-theme select:disabled {
+  opacity: .55;
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+
+    transition-duration: 0.01ms !important;
+  }
+
+}

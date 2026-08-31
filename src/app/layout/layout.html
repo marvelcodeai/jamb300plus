@@ -1,0 +1,356 @@
+<div class="app-shell">
+
+  <!-- =========================
+       MOBILE OVERLAY
+  ========================== -->
+
+  @if (sidebarOpen) {
+
+    <div
+      class="sidebar-overlay"
+      (click)="closeSidebar()">
+    </div>
+
+  }
+
+
+  <!-- =========================
+       SIDEBAR
+  ========================== -->
+
+  <aside
+    class="sidebar"
+    [class.sidebar-open]="sidebarOpen">
+
+
+    <!-- LOGO -->
+
+    <div class="sidebar-logo">
+
+      <div class="logo-mark">
+        J
+      </div>
+
+      <div class="logo-text">
+        JAMB<span>300+</span>
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <nav class="sidebar-nav">
+
+
+      <!-- HOME -->
+
+      <a
+        routerLink="/home"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeSidebar()">
+
+        <span class="nav-icon">⌂</span>
+
+        <span>
+          Home
+        </span>
+
+      </a>
+
+
+      <!-- SUBJECTS -->
+
+      <a
+        routerLink="/subjects"
+        routerLinkActive="active"
+        (click)="closeSidebar()">
+
+        <span class="nav-icon">▣</span>
+
+        <span>
+          Subjects
+        </span>
+
+      </a>
+
+
+      <!-- PAST QUESTIONS -->
+
+      <a
+        routerLink="/past-questions"
+        routerLinkActive="active"
+        (click)="closeSidebar()">
+
+        <span class="nav-icon">▤</span>
+
+        <span>
+          Past Questions
+        </span>
+
+      </a>
+
+
+      <!-- WEEKLY TEST -->
+
+      <a
+        routerLink="/weekly-test"
+        routerLinkActive="active"
+        (click)="closeSidebar()">
+
+        <span class="nav-icon">✓</span>
+
+        <span>
+          Weekly Test
+        </span>
+
+      </a>
+
+
+      <!-- PERFORMANCE -->
+
+      <a
+        routerLink="/performance"
+        routerLinkActive="active"
+        (click)="closeSidebar()">
+
+        <span class="nav-icon">↗</span>
+
+        <span>
+          Performance
+        </span>
+
+      </a>
+
+
+      <!-- LEADERBOARD -->
+
+      <a
+        routerLink="/leaderboard"
+        routerLinkActive="active"
+        (click)="closeSidebar()">
+
+        <span class="nav-icon">♛</span>
+
+        <span>
+          Leaderboard
+        </span>
+
+      </a>
+
+
+      <!-- VIDEOS -->
+
+      <a
+        routerLink="/videos"
+        routerLinkActive="active"
+        (click)="closeSidebar()">
+
+        <span class="nav-icon">▶</span>
+
+        <span>
+          Videos
+        </span>
+
+      </a>
+
+
+      <!-- CONTACT -->
+
+      <a
+        routerLink="/contact"
+        routerLinkActive="active"
+        (click)="closeSidebar()">
+
+        <span class="nav-icon">?</span>
+
+        <span>
+          Contact
+        </span>
+
+      </a>
+
+
+      <!-- SETTINGS -->
+
+      <a
+        routerLink="/settings"
+        routerLinkActive="active"
+        (click)="closeSidebar()">
+
+        <span class="nav-icon">⚙</span>
+
+        <span>
+          Settings
+        </span>
+
+      </a>
+
+    </nav>
+
+
+    <!-- =========================
+         SIDEBAR BOTTOM
+    ========================== -->
+
+    <div class="sidebar-bottom">
+
+
+      <!-- GOAL -->
+
+      <div class="goal-mini">
+
+        <span class="goal-label">
+          YOUR GOAL
+        </span>
+
+        <strong>
+          300<span>+</span>
+        </strong>
+
+        <small>
+          Keep pushing forward.
+        </small>
+
+      </div>
+
+
+      <!-- LOGOUT -->
+
+      <button
+        type="button"
+        class="logout-link"
+        (click)="logout()">
+
+        <span class="logout-icon">
+          ↪
+        </span>
+
+        <span>
+          Log out
+        </span>
+
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =========================
+       MAIN AREA
+  ========================== -->
+
+  <main class="main-content">
+
+
+    <!-- =========================
+         TOPBAR
+    ========================== -->
+
+    <header class="topbar">
+
+
+      <!-- MOBILE MENU -->
+
+      <button
+        class="menu-button"
+        type="button"
+        (click)="toggleSidebar()"
+        aria-label="Open menu">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
+
+      <!-- BRAND -->
+
+      <div class="topbar-title">
+
+        <span>
+          JAMB300+
+        </span>
+
+      </div>
+
+
+      <!-- =========================
+           RIGHT SIDE
+      ========================== -->
+
+      <div class="topbar-right">
+
+
+        <!-- NOTIFICATIONS -->
+
+        <button
+          class="notification-button"
+          type="button"
+          aria-label="Notifications">
+
+          ♢
+
+        </button>
+
+
+        <!-- =========================
+             USER PROFILE
+        ========================== -->
+
+        <div class="profile">
+
+
+          <!-- USER INITIAL -->
+
+          <div class="avatar">
+
+            {{ userInitial() }}
+
+          </div>
+
+
+          <!-- USER DETAILS -->
+
+          <div class="profile-info">
+
+            <strong>
+              {{ userName() }}
+            </strong>
+
+            <span>
+              {{ userExam() }} Candidate
+            </span>
+
+            <small>
+              {{ userEmail() }}
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================
+         PAGE CONTENT
+    ========================== -->
+
+    <section class="page-container">
+
+      <router-outlet></router-outlet>
+
+    </section>
+
+
+  </main>
+
+</div>

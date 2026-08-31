@@ -1,0 +1,339 @@
+<div class="result-page">
+
+  <!-- =====================================================
+       RESULT NOT FOUND
+  ====================================================== -->
+
+  <section
+    class="result-empty"
+    *ngIf="!resultLoaded">
+
+    <div class="empty-icon">
+      !
+    </div>
+
+    <span class="eyebrow">
+      WEEKLY CHALLENGE
+    </span>
+
+    <h1>
+      Result
+      <span>not found.</span>
+    </h1>
+
+    <p>
+      We couldn't find a completed weekly test result.
+      Please take the challenge first.
+    </p>
+
+    <button
+      type="button"
+      class="primary-button"
+      (click)="backToWeeklyTest()">
+
+      Go to Weekly Test
+
+      <span>→</span>
+
+    </button>
+
+  </section>
+
+
+  <!-- =====================================================
+       RESULT
+  ====================================================== -->
+
+  <ng-container *ngIf="resultLoaded">
+
+    <!-- ===================================================
+         HEADER
+    ==================================================== -->
+
+    <header class="result-header">
+
+      <div class="header-copy">
+
+        <span class="eyebrow">
+          WEEK {{ weekNumber }} • COMPLETED
+        </span>
+
+        <h1>
+          Challenge
+          <span>complete.</span>
+        </h1>
+
+        <p>
+          Your weekly JAMB challenge has been submitted.
+          Here's how you performed.
+        </p>
+
+      </div>
+
+
+      <div class="completed-badge">
+
+        <div class="check">
+          ✓
+        </div>
+
+        <div>
+          <strong>
+            TEST COMPLETED
+          </strong>
+
+          <span>
+            Week {{ weekNumber }}
+          </span>
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- ===================================================
+         MAIN RESULT CARD
+    ==================================================== -->
+
+    <section class="score-card">
+
+      <div class="score-content">
+
+        <span class="score-label">
+          YOUR SCORE
+        </span>
+
+        <div
+          class="score-number"
+          [class]="scoreClass">
+
+          <strong>
+            {{ score }}
+          </strong>
+
+          <span>
+            / {{ total }}
+          </span>
+
+        </div>
+
+        <div class="percentage">
+          {{ percentage }}%
+        </div>
+
+        <h2>
+          {{ performanceTitle }}
+        </h2>
+
+        <p>
+          {{ performanceMessage }}
+        </p>
+
+      </div>
+
+
+      <!-- SCORE RING -->
+
+      <div class="score-visual">
+
+        <div
+          class="score-ring"
+          [class]="scoreClass">
+
+          <div class="ring-inner">
+
+            <strong>
+              {{ percentage }}%
+            </strong>
+
+            <span>
+              SCORE
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         STATISTICS
+    ==================================================== -->
+
+    <section class="statistics">
+
+      <div class="stat-card correct">
+
+        <div class="stat-icon">
+          ✓
+        </div>
+
+        <div>
+
+          <span>
+            CORRECT
+          </span>
+
+          <strong>
+            {{ correctAnswers }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="stat-card wrong">
+
+        <div class="stat-icon">
+          ×
+        </div>
+
+        <div>
+
+          <span>
+            WRONG
+          </span>
+
+          <strong>
+            {{ wrongAnswers }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="stat-card unanswered">
+
+        <div class="stat-icon">
+          —
+        </div>
+
+        <div>
+
+          <span>
+            UNANSWERED
+          </span>
+
+          <strong>
+            {{ unanswered }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="stat-card answered">
+
+        <div class="stat-icon">
+          #
+        </div>
+
+        <div>
+
+          <span>
+            ANSWERED
+          </span>
+
+          <strong>
+            {{ answered }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         SUBMISSION NOTICE
+    ==================================================== -->
+
+    <section
+      class="submission-notice"
+      *ngIf="automaticSubmit">
+
+      <div class="notice-icon">
+        ⏱
+      </div>
+
+      <div>
+
+        <strong>
+          Time ran out
+        </strong>
+
+        <p>
+          Your test was automatically submitted when
+          the timer reached zero.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         NEXT STEP
+    ==================================================== -->
+
+    <section class="next-section">
+
+      <div>
+
+        <span class="eyebrow">
+          WHAT'S NEXT?
+        </span>
+
+        <h2>
+          Keep building your
+          <span>300+ journey.</span>
+        </h2>
+
+        <p>
+          Check your ranking and see how you compare
+          with other students taking the weekly challenge.
+        </p>
+
+      </div>
+
+
+      <div class="result-actions">
+
+        <button
+          type="button"
+          class="leaderboard-button"
+          (click)="viewLeaderboard()">
+
+          View Leaderboard
+
+          <span>
+            →
+          </span>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="home-button"
+          (click)="goHome()">
+
+          Back to Dashboard
+
+        </button>
+
+      </div>
+
+    </section>
+
+  </ng-container>
+
+</div>

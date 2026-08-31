@@ -1,0 +1,551 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.contact-page {
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 45px;
+
+  background: #f5f5f5;
+  color: #0a2342;
+
+  font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.contact-hero {
+  position: relative;
+
+  width: 100%;
+  max-width: 1150px;
+
+  min-height: 220px;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 35px;
+
+  padding: 40px 45px;
+
+  overflow: hidden;
+
+  border-radius: 15px;
+
+  background: #0a2342;
+}
+
+.contact-hero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 330px;
+  height: 330px;
+
+  right: -120px;
+  top: -190px;
+
+  border: 1px solid rgba(255, 180, 0, .18);
+
+  border-radius: 50%;
+}
+
+.contact-hero::after {
+  content: "";
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  right: 80px;
+  bottom: -190px;
+
+  border: 1px solid rgba(255, 180, 0, .10);
+
+  border-radius: 50%;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+
+  min-width: 0;
+}
+
+.eyebrow {
+  color: #ffb400;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.7px;
+}
+
+.contact-hero h2 {
+  margin: 10px 0 0;
+
+  color: white;
+
+  font-size: clamp(32px, 4vw, 48px);
+
+  line-height: 1.05;
+
+  letter-spacing: -2px;
+}
+
+.contact-hero h2 span {
+  color: #ffb400;
+}
+
+.contact-hero p {
+  max-width: 520px;
+
+  margin: 15px 0 0;
+
+  color: rgba(255, 255, 255, .55);
+
+  font-size: 10px;
+
+  line-height: 1.7;
+}
+
+.hero-icon {
+  position: relative;
+  z-index: 2;
+
+  width: 85px;
+  height: 85px;
+
+  flex: 0 0 85px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #ffb400;
+
+  color: #0a2342;
+
+  font-size: 30px;
+  font-weight: 900;
+
+  box-shadow: 0 15px 35px rgba(0, 0, 0, .15);
+}
+
+
+/* =====================================================
+   CONTACT GRID
+===================================================== */
+
+.contact-grid {
+  width: 100%;
+  max-width: 1150px;
+
+  margin: 22px auto 0;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.contact-card {
+  min-width: 0;
+
+  min-height: 220px;
+
+  padding: 25px;
+
+  border: 1px solid #e7e7e7;
+
+  border-radius: 11px;
+
+  background: white;
+
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-3px);
+
+  border-color: rgba(255, 180, 0, .45);
+
+  box-shadow: 0 10px 25px rgba(10, 35, 66, .06);
+}
+
+.card-icon {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 18px;
+
+  border-radius: 8px;
+
+  background: #fff6dc;
+
+  color: #ffb400;
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.contact-card > span {
+  display: block;
+
+  color: #a0a6ad;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1.2px;
+}
+
+.contact-card h3 {
+  margin: 7px 0 0;
+
+  font-size: 14px;
+
+  line-height: 1.35;
+}
+
+.contact-card p {
+  margin: 9px 0 14px;
+
+  color: #8e969f;
+
+  font-size: 9px;
+
+  line-height: 1.7;
+}
+
+.contact-card a {
+  display: inline-block;
+
+  max-width: 100%;
+
+  color: #0a2342;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  text-decoration: none;
+
+  overflow-wrap: anywhere;
+
+  transition: color .2s ease;
+}
+
+.contact-card a:hover {
+  color: #ffb400;
+}
+
+
+/* =====================================================
+   FAQ
+===================================================== */
+
+.faq-section {
+  width: 100%;
+  max-width: 1150px;
+
+  margin: 40px auto 0;
+}
+
+.section-heading > span {
+  color: #ffb400;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+.section-heading h3 {
+  margin: 7px 0 18px;
+
+  font-size: 22px;
+
+  line-height: 1.2;
+}
+
+.section-heading h3 strong {
+  color: #ffb400;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.faq-item {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 18px 20px;
+
+  border: 1px solid #e7e7e7;
+
+  border-radius: 9px;
+
+  background: white;
+}
+
+.faq-item > div {
+  min-width: 0;
+}
+
+.faq-item strong {
+  display: block;
+
+  font-size: 10px;
+
+  line-height: 1.4;
+}
+
+.faq-item p {
+  max-width: 700px;
+
+  margin: 6px 0 0;
+
+  color: #969da5;
+
+  font-size: 8px;
+
+  line-height: 1.6;
+}
+
+.faq-item > span {
+  flex-shrink: 0;
+
+  color: #ffb400;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .contact-page {
+    padding: 30px;
+  }
+
+  .contact-hero {
+    padding: 35px;
+  }
+
+  .contact-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+
+  .contact-page {
+    padding: 20px 16px 30px;
+  }
+
+
+  /* HERO */
+
+  .contact-hero {
+    min-height: auto;
+
+    flex-direction: column;
+    align-items: flex-start;
+
+    padding: 28px 23px;
+
+    gap: 20px;
+
+    border-radius: 13px;
+  }
+
+  .contact-hero h2 {
+    font-size: 32px;
+
+    letter-spacing: -1.3px;
+  }
+
+  .contact-hero p {
+    max-width: 100%;
+
+    font-size: 10px;
+
+    line-height: 1.7;
+  }
+
+  .hero-icon {
+    width: 55px;
+    height: 55px;
+
+    flex-basis: 55px;
+
+    font-size: 21px;
+  }
+
+
+  /* CARDS */
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+
+    margin-top: 16px;
+  }
+
+  .contact-card {
+    min-height: auto;
+
+    padding: 21px;
+  }
+
+  .card-icon {
+    width: 36px;
+    height: 36px;
+
+    margin-bottom: 15px;
+  }
+
+
+  /* FAQ */
+
+  .faq-section {
+    margin-top: 32px;
+  }
+
+  .section-heading h3 {
+    margin-bottom: 14px;
+
+    font-size: 20px;
+  }
+
+  .faq-item {
+    align-items: flex-start;
+
+    padding: 16px;
+
+    gap: 15px;
+  }
+
+  .faq-item strong {
+    font-size: 9px;
+  }
+
+  .faq-item p {
+    font-size: 8px;
+  }
+
+  .faq-item > span {
+    font-size: 16px;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL PHONES
+===================================================== */
+
+@media (max-width: 400px) {
+
+  .contact-page {
+    padding: 15px 12px 25px;
+  }
+
+  .contact-hero {
+    padding: 23px 19px;
+  }
+
+  .contact-hero h2 {
+    font-size: 29px;
+
+    letter-spacing: -1px;
+  }
+
+  .contact-hero p {
+    font-size: 9px;
+  }
+
+  .hero-icon {
+    width: 50px;
+    height: 50px;
+
+    flex-basis: 50px;
+
+    font-size: 19px;
+  }
+
+  .contact-card {
+    padding: 18px;
+  }
+
+  .faq-item {
+    padding: 14px;
+  }
+
+}
+
+
+/* =====================================================
+   VERY SMALL PHONES
+===================================================== */
+
+@media (max-width: 330px) {
+
+  .contact-page {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .contact-hero h2 {
+    font-size: 26px;
+  }
+
+  .contact-card {
+    padding: 16px;
+  }
+
+}

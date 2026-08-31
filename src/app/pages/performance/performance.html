@@ -1,0 +1,714 @@
+<div class="performance-page">
+
+  <!-- =================================================
+       PAGE HEADER
+  ================================================== -->
+
+  <section class="performance-header">
+
+    <div class="header-copy">
+
+      <span class="eyebrow">
+        YOUR PERFORMANCE
+      </span>
+
+      <h2>
+        Track your
+        <span>progress.</span>
+      </h2>
+
+      <p>
+        See how you're performing across your weekly tests
+        and keep pushing toward your JAMB300+ goal.
+      </p>
+
+    </div>
+
+    <!-- TARGET -->
+
+    <div class="target-card">
+
+      <div class="target-top">
+        <span>YOUR TARGET</span>
+        <span>JAMB GOAL</span>
+      </div>
+
+      <strong>
+        300<span>+</span>
+      </strong>
+
+      <div class="target-progress">
+
+        <div
+          class="target-progress-bar"
+          [style.width.%]="
+            averagePercentage() >= 100
+              ? 100
+              : averagePercentage()
+          ">
+        </div>
+
+      </div>
+
+      <small>
+        Keep improving your scores
+      </small>
+
+    </div>
+
+  </section>
+
+
+  <!-- =================================================
+       LOADING
+  ================================================== -->
+
+  @if (loading()) {
+
+    <div class="state-card">
+
+      <div class="state-icon">
+        ⟳
+      </div>
+
+      <h3>
+        Loading your performance...
+      </h3>
+
+      <p>
+        We're getting your latest test results.
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- =================================================
+       ERROR
+  ================================================== -->
+
+  @if (!loading() && errorMessage()) {
+
+    <div class="state-card error-state">
+
+      <div class="state-icon">
+        !
+      </div>
+
+      <h3>
+        Unable to load performance
+      </h3>
+
+      <p>
+        {{ errorMessage() }}
+      </p>
+
+      <button
+        type="button"
+        (click)="loadPerformance()">
+
+        Try Again
+
+      </button>
+
+    </div>
+
+  }
+
+
+  @if (!loading() && !errorMessage()) {
+
+
+    <!-- ===============================================
+         SUMMARY CARDS
+    ================================================ -->
+
+    <section class="summary-grid">
+
+      <!-- TESTS -->
+
+      <div class="summary-card">
+
+        <div class="summary-icon">
+          ✓
+        </div>
+
+        <div>
+
+          <span>
+            TESTS TAKEN
+          </span>
+
+          <strong>
+            {{ testsTaken() }}
+          </strong>
+
+          <small>
+            {{ testsTaken() === 1 ? 'Test completed' : 'Tests completed' }}
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- AVERAGE -->
+
+      <div class="summary-card">
+
+        <div class="summary-icon">
+          ★
+        </div>
+
+        <div>
+
+          <span>
+            AVERAGE SCORE
+          </span>
+
+          @if (testsTaken() > 0) {
+
+            <strong>
+              {{ averagePercentage() }}%
+            </strong>
+
+            <small>
+              Across all tests
+            </small>
+
+          } @else {
+
+            <strong>
+              —
+            </strong>
+
+            <small>
+              No score yet
+            </small>
+
+          }
+
+        </div>
+
+      </div>
+
+
+      <!-- BEST -->
+
+      <div class="summary-card">
+
+        <div class="summary-icon">
+          ↗
+        </div>
+
+        <div>
+
+          <span>
+            BEST SCORE
+          </span>
+
+          @if (testsTaken() > 0) {
+
+            <strong>
+              {{ bestPercentage() }}%
+            </strong>
+
+            <small>
+              Your highest result
+            </small>
+
+          } @else {
+
+            <strong>
+              —
+            </strong>
+
+            <small>
+              No score yet
+            </small>
+
+          }
+
+        </div>
+
+      </div>
+
+
+      <!-- LAST TEST -->
+
+      <div class="summary-card">
+
+        <div class="summary-icon">
+          ◷
+        </div>
+
+        <div>
+
+          <span>
+            LAST TEST
+          </span>
+
+          @if (latestResult()) {
+
+            <strong>
+              {{ latestResult()!.score }}/{{ latestResult()!.total_questions }}
+            </strong>
+
+            <small>
+              {{ formatDate(latestResult()!.created_at) }}
+            </small>
+
+          } @else {
+
+            <strong>
+              —
+            </strong>
+
+            <small>
+              No attempt yet
+            </small>
+
+          }
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===============================================
+         PERFORMANCE TREND
+    ================================================ -->
+
+    <section class="performance-section">
+
+      <div class="section-title">
+
+        <div>
+
+          <span>
+            PERFORMANCE TREND
+          </span>
+
+          <h3>
+            Your test
+            <strong>progress.</strong>
+          </h3>
+
+        </div>
+
+        @if (testsTaken() > 0) {
+
+          <div class="average-badge">
+            {{ averagePercentage() }}% average
+          </div>
+
+        }
+
+      </div>
+
+
+      @if (results().length > 0) {
+
+        <div class="trend-card">
+
+          <!-- Y AXIS -->
+
+          <div class="y-axis">
+
+            <span>100%</span>
+            <span>75%</span>
+            <span>50%</span>
+            <span>25%</span>
+            <span>0%</span>
+
+          </div>
+
+
+          <!-- GRAPH -->
+
+          <div class="graph">
+
+            <div class="grid-line line-100"></div>
+            <div class="grid-line line-75"></div>
+            <div class="grid-line line-50"></div>
+            <div class="grid-line line-25"></div>
+            <div class="grid-line line-0"></div>
+
+
+            <div class="trend-bars">
+
+              @for (
+                result of results().slice().reverse();
+                track trackResult($index, result)
+              ) {
+
+                <div class="trend-column">
+
+                  <div class="bar-area">
+
+                    <div
+                      class="trend-bar"
+                      [style.height.%]="
+                        getTrendHeight(result)
+                      ">
+
+                      <span>
+                        {{ result.percentage }}%
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                  <small>
+                    Week {{ result.week_number }}
+                  </small>
+
+                </div>
+
+              }
+
+            </div>
+
+          </div>
+
+        </div>
+
+      } @else {
+
+        <div class="empty-section">
+
+          <div class="empty-icon">
+            ◔
+          </div>
+
+          <h3>
+            Your progress starts here.
+          </h3>
+
+          <p>
+            Complete your first weekly test and your
+            performance trend will appear here.
+          </p>
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- ===============================================
+         TEST HISTORY
+    ================================================ -->
+
+    <section class="performance-section history-section">
+
+      <div class="section-title">
+
+        <div>
+
+          <span>
+            TEST HISTORY
+          </span>
+
+          <h3>
+            Your recent
+            <strong>results.</strong>
+          </h3>
+
+        </div>
+
+        @if (testsTaken() > 0) {
+
+          <span class="history-count">
+            {{ testsTaken() }}
+            {{ testsTaken() === 1 ? 'test' : 'tests' }}
+          </span>
+
+        }
+
+      </div>
+
+
+      @if (results().length > 0) {
+
+        <div class="history-card">
+
+          @for (
+            result of results();
+            track trackResult($index, result)
+          ) {
+
+            <div class="history-row">
+
+              <!-- NUMBER -->
+
+              <div class="history-number">
+
+                {{ $index + 1 }}
+
+              </div>
+
+
+              <!-- TEST INFO -->
+
+              <div class="history-info">
+
+                <strong>
+                  {{ getTestName(result) }}
+                </strong>
+
+                <span>
+                  {{ getWeekLabel(result) }}
+                  •
+                  {{ formatDate(result.created_at) }}
+                </span>
+
+              </div>
+
+
+              <!-- CORRECT / WRONG -->
+
+              <div class="history-details">
+
+                <span class="correct">
+                  {{ result.correct_answers }}
+                  correct
+                </span>
+
+                <span class="wrong">
+                  {{ result.wrong_answers }}
+                  wrong
+                </span>
+
+              </div>
+
+
+              <!-- SCORE -->
+
+              <div class="history-score">
+
+                <strong>
+                  {{ formatScore(result) }}
+                </strong>
+
+                <span
+                  [class]="
+                    'result-label ' +
+                    getScoreClass(result.percentage)
+                  ">
+
+                  {{ result.percentage }}%
+
+                </span>
+
+              </div>
+
+
+              <!-- RESULT -->
+
+              <div class="history-result">
+
+                <strong
+                  [class]="
+                    getScoreClass(result.percentage)
+                  ">
+
+                  {{ getResultMessage(result.percentage) }}
+
+                </strong>
+
+                @if (result.automatic_submit) {
+
+                  <small>
+                    Auto submitted
+                  </small>
+
+                } @else {
+
+                  <small>
+                    Completed
+                  </small>
+
+                }
+
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      } @else {
+
+        <div class="empty-section history-empty">
+
+          <div class="empty-icon">
+            ✓
+          </div>
+
+          <h3>
+            No test results yet.
+          </h3>
+
+          <p>
+            Your completed weekly tests will appear here.
+          </p>
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- ===============================================
+         SUBJECT ANALYSIS
+    ================================================ -->
+
+    <section class="performance-section subject-section">
+
+      <div class="section-title">
+
+        <div>
+
+          <span>
+            SUBJECT ANALYSIS
+          </span>
+
+          <h3>
+            Subject
+            <strong>performance.</strong>
+          </h3>
+
+        </div>
+
+        <span class="coming-label">
+          SUBJECT TRACKING
+        </span>
+
+      </div>
+
+
+      <div class="subject-grid">
+
+
+        <!-- MATHEMATICS -->
+
+        <div class="subject-card">
+
+          <div class="subject-icon">
+            ∑
+          </div>
+
+          <div class="subject-info">
+
+            <strong>
+              Mathematics
+            </strong>
+
+            <span>
+              Subject-level results will appear here.
+            </span>
+
+          </div>
+
+          <div class="subject-status">
+            —
+          </div>
+
+        </div>
+
+
+        <!-- ENGLISH -->
+
+        <div class="subject-card">
+
+          <div class="subject-icon">
+            A
+          </div>
+
+          <div class="subject-info">
+
+            <strong>
+              English Language
+            </strong>
+
+            <span>
+              Subject-level results will appear here.
+            </span>
+
+          </div>
+
+          <div class="subject-status">
+            —
+          </div>
+
+        </div>
+
+
+        <!-- PHYSICS -->
+
+        <div class="subject-card">
+
+          <div class="subject-icon">
+            Φ
+          </div>
+
+          <div class="subject-info">
+
+            <strong>
+              Physics
+            </strong>
+
+            <span>
+              Subject-level results will appear here.
+            </span>
+
+          </div>
+
+          <div class="subject-status">
+            —
+          </div>
+
+        </div>
+
+
+        <!-- CHEMISTRY -->
+
+        <div class="subject-card">
+
+          <div class="subject-icon">
+            ⚗
+          </div>
+
+          <div class="subject-info">
+
+            <strong>
+              Chemistry
+            </strong>
+
+            <span>
+              Subject-level results will appear here.
+            </span>
+
+          </div>
+
+          <div class="subject-status">
+            —
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  }
+
+</div>

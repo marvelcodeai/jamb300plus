@@ -1,0 +1,205 @@
+
+<div class="login-page">
+
+  <!-- LEFT BRAND AREA -->
+
+  <section class="brand-panel">
+
+    <div class="brand-content">
+
+      <div class="logo">
+        Jamb<span>300+</span>
+      </div>
+
+      <div class="brand-message">
+
+        <span class="eyebrow">
+          JAMB PREPARATION PLATFORM
+        </span>
+
+        <h1>
+          Your journey to
+          <span>300+</span>
+          starts here.
+        </h1>
+
+        <p>
+          Study smarter, practice consistently,
+          track your performance and stay focused
+          on your JAMB goal.
+        </p>
+
+      </div>
+
+      <div class="brand-footer">
+        <span>Prepare smart.</span>
+        <span>Score higher.</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- LOGIN AREA -->
+
+  <section class="login-panel">
+
+    <div class="login-container">
+
+      <!-- MOBILE LOGO -->
+
+      <div class="mobile-logo">
+        Jamb<span>300+</span>
+      </div>
+
+
+      <!-- HEADER -->
+
+      <div class="login-header">
+
+        <span class="welcome-label">
+          WELCOME BACK
+        </span>
+
+        <h2>
+          Sign in to your account
+        </h2>
+
+        <p>
+          Continue your preparation and keep
+          working towards your 300+ goal.
+        </p>
+
+      </div>
+
+
+      <!-- LOGIN FORM -->
+
+      <form
+        class="login-form"
+        (ngSubmit)="onLogin()"
+      >
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+          <label for="email">
+            Email address
+          </label>
+
+          <input
+            id="email"
+            name="email"
+            type="email"
+            [(ngModel)]="email"
+            (blur)="validateEmail()"
+            (input)="emailError = ''"
+            placeholder="Enter your email address"
+            autocomplete="email"
+            required
+          >
+
+          @if (emailError) {
+            <small class="error-message">
+              {{ emailError }}
+            </small>
+          }
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+          <div class="password-header">
+
+            <label for="password">
+              Password
+            </label>
+
+            <a routerLink="/forgot-password">
+              Forgot password?
+            </a>
+
+          </div>
+
+          <input
+            id="password"
+            name="password"
+            type="password"
+            [(ngModel)]="password"
+            (blur)="validatePassword()"
+            (input)="passwordError = ''"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+            minlength="6"
+          >
+
+          @if (passwordError) {
+            <small class="error-message">
+              {{ passwordError }}
+            </small>
+          }
+
+        </div>
+
+
+        <!-- REMEMBER ME -->
+
+        <label class="remember">
+
+          <input
+            type="checkbox"
+            name="remember"
+          >
+
+          <span>
+            Remember me
+          </span>
+
+        </label>
+
+
+        <!-- BUTTON -->
+
+        <button
+          type="submit"
+          class="login-button"
+        >
+          Sign in
+          <span>→</span>
+        </button>
+
+      </form>
+
+
+      <!-- REGISTER -->
+
+      <div class="register-prompt">
+
+        <span>
+          Don't have an account?
+        </span>
+
+        <a routerLink="/register">
+          Create an account
+        </a>
+
+      </div>
+
+
+      <!-- FOOTER -->
+
+      <p class="login-footer">
+        © 2026 Jamb300Plus. All rights reserved.
+      </p>
+
+    </div>
+
+  </section>
+
+</div>

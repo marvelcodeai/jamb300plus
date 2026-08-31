@@ -1,0 +1,220 @@
+
+<section class="topics-page">
+
+  <!-- =========================
+       BACK
+  ========================== -->
+
+  <a
+    routerLink="/subjects"
+    class="back-link">
+
+    ← Back to subjects
+
+  </a>
+
+
+  <!-- =========================
+       ERROR
+  ========================== -->
+
+  @if (errorMessage()) {
+
+    <div class="state-message error">
+
+      {{ errorMessage() }}
+
+    </div>
+
+  }
+
+
+  <!-- =========================
+       CONTENT
+  ========================== -->
+
+  @if (subject()) {
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <section class="topics-header">
+
+      <div class="header-icon">
+
+        {{ getIcon(subject()!.subject_name) }}
+
+      </div>
+
+
+      <div class="header-info">
+
+        <span class="eyebrow">
+          JAMB SUBJECT
+        </span>
+
+        <h1>
+          {{ subject()!.subject_name }}
+        </h1>
+
+        <p>
+          Explore the topics you need to master
+          to reach your 300+ target.
+        </p>
+
+      </div>
+
+
+      <div class="topic-count">
+
+        <strong>
+          {{ topics().length }}
+        </strong>
+
+        <span>
+          Topics
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         TOPICS
+    ========================== -->
+
+    <section class="topics-section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <span class="eyebrow">
+            PREPARATION
+          </span>
+
+          <h2>
+            Topics to master
+          </h2>
+
+        </div>
+
+
+        <span class="topic-total">
+
+          {{ topics().length }} topics
+
+        </span>
+
+      </div>
+
+
+      <!-- =========================
+           TOPICS LOADING
+      ========================== -->
+
+      @if (topicsLoading()) {
+
+        <div class="state-message">
+
+          Loading topics...
+
+        </div>
+
+      }
+
+
+      <!-- =========================
+           TOPICS
+      ========================== -->
+
+      @if (
+        !topicsLoading() &&
+        topics().length > 0
+      ) {
+
+        <div class="topics-list">
+
+          @for (
+            topic of topics();
+            track topic.id;
+            let i = $index
+          ) {
+
+            <a
+              class="topic-card"
+              [routerLink]="[
+                '/subjects',
+                subject()!.id,
+                'topics',
+                topic.id
+              ]">
+
+              <div class="topic-number">
+
+                {{ getTopicNumber(i) }}
+
+              </div>
+
+
+              <div class="topic-info">
+
+                <span>
+                  TOPIC
+                </span>
+
+                <h3>
+
+                  {{ topic.topic_name }}
+
+                </h3>
+
+              </div>
+
+
+              <div class="topic-arrow">
+
+                →
+
+              </div>
+
+            </a>
+
+          }
+
+        </div>
+
+      }
+
+
+      <!-- =========================
+           EMPTY
+      ========================== -->
+
+      @if (
+        !topicsLoading() &&
+        topics().length === 0
+      ) {
+
+        <div class="empty-state">
+
+          <strong>
+            No topics available yet.
+          </strong>
+
+          <p>
+            Topics for this subject will appear
+            here when they are added.
+          </p>
+
+        </div>
+
+      }
+
+    </section>
+
+  }
+
+</section>

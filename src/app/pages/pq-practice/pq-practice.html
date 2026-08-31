@@ -1,0 +1,766 @@
+<div class="pq-practice-page">
+
+  <!-- =========================================
+       LOADING
+  ========================================== -->
+
+  @if (loading) {
+
+    <section class="state-card">
+
+      <div class="loader"></div>
+
+      <h2>
+        Loading Past Questions...
+      </h2>
+
+      <p>
+        Preparing JAMB {{ year }} questions for you.
+      </p>
+
+    </section>
+
+  }
+
+
+  <!-- =========================================
+       ERROR
+  ========================================== -->
+
+  @else if (errorMessage) {
+
+    <section class="state-card error-state">
+
+      <div class="state-icon">
+        !
+      </div>
+
+      <h2>
+        Something went wrong
+      </h2>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+      <button
+        type="button"
+        class="action-button"
+        (click)="loadQuestions()">
+
+        Try Again
+
+      </button>
+
+    </section>
+
+  }
+
+
+  <!-- =========================================
+       NO QUESTIONS
+  ========================================== -->
+
+  @else if (questions.length === 0) {
+
+    <section class="state-card">
+
+      <div class="state-icon">
+        📚
+      </div>
+
+      <h2>
+        No Questions Available
+      </h2>
+
+      <p>
+        There are currently no questions available
+        for JAMB {{ year }} in this subject.
+      </p>
+
+      <button
+        type="button"
+        class="action-button"
+        (click)="exitPractice()">
+
+        Back to Subjects
+
+      </button>
+
+    </section>
+
+  }
+
+
+  <!-- =========================================
+       PRACTICE SETUP
+  ========================================== -->
+
+  @else if (!setupComplete) {
+
+    <section class="setup-page">
+
+      <!-- BACK -->
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="exitPractice()">
+
+        <span>
+          ←
+        </span>
+
+        Back to Subjects
+
+      </button>
+
+
+      <!-- SETUP CARD -->
+
+      <div class="setup-card">
+
+        <div class="setup-icon">
+          📚
+        </div>
+
+
+        <span class="setup-label">
+          JAMB300+ • PAST QUESTIONS
+        </span>
+
+
+        <h1>
+          JAMB {{ year }}
+        </h1>
+
+
+        <h2>
+          {{ subjectName }}
+        </h2>
+
+
+        <p class="setup-description">
+          You are about to practice
+          {{ questions.length }}
+          past question{{ questions.length === 1 ? '' : 's' }}.
+          Select how much time you want for this practice.
+        </p>
+
+
+        <!-- =================================
+             TEST INFO
+        ================================== -->
+
+        <div class="setup-info">
+
+          <div class="info-box">
+
+            <span class="info-icon">
+              📚
+            </span>
+
+            <div>
+
+              <small>
+                QUESTIONS
+              </small>
+
+              <strong>
+                {{ questions.length }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-box">
+
+            <span class="info-icon">
+              🎯
+            </span>
+
+            <div>
+
+              <small>
+                SUBJECT
+              </small>
+
+              <strong>
+                {{ subjectName }}
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================
+             TIME SELECTION
+        ================================== -->
+
+        <div class="time-section">
+
+          <div class="time-heading">
+
+            <div>
+
+              <span>
+                TIME LIMIT
+              </span>
+
+              <h3>
+                How much time do you need?
+              </h3>
+
+            </div>
+
+            <div class="selected-time">
+
+              @if (selectedTime === 0) {
+
+                No Limit
+
+              } @else if (selectedTime < 60) {
+
+                {{ selectedTime }} mins
+
+              } @else if (selectedTime === 60) {
+
+                1 hour
+
+              } @else {
+
+                {{ selectedTime / 60 }} hours
+
+              }
+
+            </div>
+
+          </div>
+
+
+          <!-- TIME OPTIONS -->
+
+          <div class="time-options">
+
+            @for (
+              time of timeOptions;
+              track time
+            ) {
+
+              <button
+                type="button"
+                class="time-option"
+                [class.selected]="selectedTime === time"
+                (click)="selectedTime = time">
+
+                @if (time === 0) {
+
+                  <span class="time-number">
+                    ∞
+                  </span>
+
+                  <span class="time-label">
+                    No Limit
+                  </span>
+
+                } @else {
+
+                  <span class="time-number">
+
+                    @if (time < 60) {
+
+                      {{ time }}
+
+                    } @else {
+
+                      {{ time / 60 }}
+
+                    }
+
+                  </span>
+
+                  <span class="time-label">
+
+                    @if (time < 60) {
+
+                      Minutes
+
+                    } @else if (time === 60) {
+
+                      Hour
+
+                    } @else {
+
+                      Hours
+
+                    }
+
+                  </span>
+
+                }
+
+              </button>
+
+            }
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================
+             START BUTTON
+        ================================== -->
+
+        <button
+          type="button"
+          class="start-button"
+          (click)="startPractice()">
+
+          <span>
+            Start Practice
+          </span>
+
+          <span>
+            →
+          </span>
+
+        </button>
+
+
+        <p class="setup-note">
+          You can navigate between questions during practice.
+        </p>
+
+      </div>
+
+    </section>
+
+  }
+
+
+  <!-- =========================================
+       PRACTICE INTERFACE
+  ========================================== -->
+
+  @else {
+
+    <section class="practice-page">
+
+
+      <!-- =====================================
+           PRACTICE HEADER
+      ====================================== -->
+
+      <header class="practice-header">
+
+        <div class="practice-title">
+
+          <button
+            type="button"
+            class="exit-button"
+            (click)="exitPractice()">
+
+            ←
+
+          </button>
+
+
+          <div>
+
+            <span>
+              JAMB {{ year }}
+            </span>
+
+            <strong>
+              {{ subjectName }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- TIMER -->
+
+        <div
+          class="timer"
+          [class.timer-warning]="
+            selectedTime !== 0 &&
+            remainingSeconds <= 300
+          ">
+
+          <span>
+            ⏱
+          </span>
+
+          <strong>
+            {{ formattedTime }}
+          </strong>
+
+        </div>
+
+      </header>
+
+
+      <!-- =====================================
+           PROGRESS
+      ====================================== -->
+
+      <div class="progress-section">
+
+        <div class="progress-info">
+
+          <span>
+            Question
+            {{ currentQuestionIndex + 1 }}
+            of
+            {{ questions.length }}
+          </span>
+
+          <span>
+            {{ answeredCount }}
+            answered
+          </span>
+
+        </div>
+
+
+        <div class="progress-track">
+
+          <div
+            class="progress-bar"
+            [style.width.%]="progressPercentage">
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================
+           QUESTION AREA
+      ====================================== -->
+
+      <div class="practice-layout">
+
+
+        <!-- ===================================
+             MAIN QUESTION
+        ==================================== -->
+
+        <main class="question-card">
+
+          <div class="question-top">
+
+            <span class="question-number">
+              QUESTION {{ currentQuestionIndex + 1 }}
+            </span>
+
+            <span class="question-count">
+              {{ currentQuestionIndex + 1 }}
+              /
+              {{ questions.length }}
+            </span>
+
+          </div>
+
+
+          <!-- QUESTION TEXT -->
+
+          <div class="question-text">
+
+            <p>
+              {{ currentQuestion.question }}
+            </p>
+
+          </div>
+
+
+          <!-- =================================
+               OPTIONS
+          ================================== -->
+
+          <div class="options-list">
+
+
+            <!-- OPTION A -->
+
+            <button
+              type="button"
+              class="option"
+              [class.selected]="isSelected('A')"
+              (click)="selectAnswer('A')">
+
+              <span class="option-letter">
+                A
+              </span>
+
+              <span class="option-text">
+                {{ currentQuestion.option_a }}
+              </span>
+
+              @if (isSelected('A')) {
+
+                <span class="option-check">
+                  ✓
+                </span>
+
+              }
+
+            </button>
+
+
+            <!-- OPTION B -->
+
+            <button
+              type="button"
+              class="option"
+              [class.selected]="isSelected('B')"
+              (click)="selectAnswer('B')">
+
+              <span class="option-letter">
+                B
+              </span>
+
+              <span class="option-text">
+                {{ currentQuestion.option_b }}
+              </span>
+
+              @if (isSelected('B')) {
+
+                <span class="option-check">
+                  ✓
+                </span>
+
+              }
+
+            </button>
+
+
+            <!-- OPTION C -->
+
+            <button
+              type="button"
+              class="option"
+              [class.selected]="isSelected('C')"
+              (click)="selectAnswer('C')">
+
+              <span class="option-letter">
+                C
+              </span>
+
+              <span class="option-text">
+                {{ currentQuestion.option_c }}
+              </span>
+
+              @if (isSelected('C')) {
+
+                <span class="option-check">
+                  ✓
+                </span>
+
+              }
+
+            </button>
+
+
+            <!-- OPTION D -->
+
+            <button
+              type="button"
+              class="option"
+              [class.selected]="isSelected('D')"
+              (click)="selectAnswer('D')">
+
+              <span class="option-letter">
+                D
+              </span>
+
+              <span class="option-text">
+                {{ currentQuestion.option_d }}
+              </span>
+
+              @if (isSelected('D')) {
+
+                <span class="option-check">
+                  ✓
+                </span>
+
+              }
+
+            </button>
+
+          </div>
+
+
+          <!-- =================================
+               NAVIGATION
+          ================================== -->
+
+          <div class="question-navigation">
+
+            <button
+              type="button"
+              class="nav-button previous"
+              [disabled]="currentQuestionIndex === 0"
+              (click)="previousQuestion()">
+
+              ← Previous
+
+            </button>
+
+
+            @if (
+              currentQuestionIndex <
+              questions.length - 1
+            ) {
+
+              <button
+                type="button"
+                class="nav-button next"
+                (click)="nextQuestion()">
+
+                Next →
+
+              </button>
+
+            } @else {
+
+              <button
+                type="button"
+                class="nav-button finish"
+                (click)="finishPractice()">
+
+                Finish Practice ✓
+
+              </button>
+
+            }
+
+          </div>
+
+        </main>
+
+
+        <!-- ===================================
+             QUESTION NAVIGATOR
+        ==================================== -->
+
+        <aside class="question-sidebar">
+
+          <div class="navigator-card">
+
+            <div class="navigator-header">
+
+              <div>
+
+                <span>
+                  QUESTIONS
+                </span>
+
+                <strong>
+                  {{ currentQuestionIndex + 1 }}
+                  /
+                  {{ questions.length }}
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <!-- QUESTION NUMBERS -->
+
+            <div class="question-grid">
+
+              @for (
+                question of questions;
+                track question.id;
+                let i = $index
+              ) {
+
+                <button
+                  type="button"
+                  class="question-number-button"
+                  [class.current]="
+                    currentQuestionIndex === i
+                  "
+                  [class.answered]="
+                    selectedAnswers[question.id]
+                  "
+                  (click)="goToQuestion(i)">
+
+                  {{ i + 1 }}
+
+                </button>
+
+              }
+
+            </div>
+
+
+            <!-- LEGEND -->
+
+            <div class="navigator-legend">
+
+              <div>
+
+                <span class="legend-current"></span>
+
+                <small>
+                  Current
+                </small>
+
+              </div>
+
+              <div>
+
+                <span class="legend-answered"></span>
+
+                <small>
+                  Answered
+                </small>
+
+              </div>
+
+              <div>
+
+                <span class="legend-unanswered"></span>
+
+                <small>
+                  Unanswered
+                </small>
+
+              </div>
+
+            </div>
+
+
+            <!-- FINISH -->
+
+            <button
+              type="button"
+              class="sidebar-finish"
+              (click)="finishPractice()">
+
+              Finish Practice
+
+            </button>
+
+          </div>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+  }
+
+</div>

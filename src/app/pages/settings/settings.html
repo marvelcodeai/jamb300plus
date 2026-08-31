@@ -1,0 +1,703 @@
+<div class="settings-page">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <section class="settings-header">
+
+    <div class="header-copy">
+
+      <span class="eyebrow">
+        ACCOUNT SETTINGS
+      </span>
+
+      <h2>
+        Make it
+        <span>yours.</span>
+      </h2>
+
+      <p>
+        Manage your profile, security, appearance and
+        study preferences from one place.
+      </p>
+
+    </div>
+
+
+    <div class="settings-visual">
+
+      <div class="settings-circle">
+        ⚙
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       LOADING
+  ====================================================== -->
+
+  @if (loading()) {
+
+    <div class="state-card">
+
+      <div class="state-icon">
+        ⟳
+      </div>
+
+      <h3>
+        Loading your settings...
+      </h3>
+
+      <p>
+        We're getting your account information.
+      </p>
+
+    </div>
+
+  }
+
+
+  @if (!loading()) {
+
+
+    <!-- ===================================================
+         ERROR
+    ==================================================== -->
+
+    @if (errorMessage()) {
+
+      <div class="message-card error-message">
+
+        <div class="message-icon">
+          !
+        </div>
+
+        <div>
+
+          <strong>
+            Something went wrong
+          </strong>
+
+          <p>
+            {{ errorMessage() }}
+          </p>
+
+        </div>
+
+      </div>
+
+    }
+
+
+    <!-- ===================================================
+         SUCCESS
+    ==================================================== -->
+
+    @if (message()) {
+
+      <div class="message-card success-message">
+
+        <div class="message-icon">
+          ✓
+        </div>
+
+        <div>
+
+          <strong>
+            Changes saved
+          </strong>
+
+          <p>
+            {{ message() }}
+          </p>
+
+        </div>
+
+      </div>
+
+    }
+
+
+    <!-- ===================================================
+         PROFILE
+    ==================================================== -->
+
+    <section class="settings-section">
+
+      <div class="section-title">
+
+        <div>
+
+          <span>
+            PROFILE
+          </span>
+
+          <h3>
+            Your personal
+            <strong>information.</strong>
+          </h3>
+
+        </div>
+
+        <span class="section-label">
+          ACCOUNT
+        </span>
+
+      </div>
+
+
+      <div class="profile-card">
+
+
+        <!-- PROFILE PHOTO -->
+
+        <div class="profile-photo-area">
+
+          <div class="profile-avatar">
+
+            @if (profileImage()) {
+
+              <img
+                [src]="profileImage()!"
+                alt="Profile picture"
+              />
+
+            } @else {
+
+              <span>
+                {{ getInitials() }}
+              </span>
+
+            }
+
+          </div>
+
+
+          <div class="photo-actions">
+
+            <label
+              class="change-photo"
+              for="profileImage">
+
+              Change photo
+
+            </label>
+
+            <input
+              id="profileImage"
+              type="file"
+              accept="image/png,image/jpeg,image/webp"
+              hidden
+              (change)="onProfileImageSelected($event)"
+            />
+
+
+            @if (profileImage()) {
+
+              <button
+                type="button"
+                class="remove-photo"
+                (click)="removeProfileImage()">
+
+                Remove
+
+              </button>
+
+            }
+
+
+            <small>
+              JPG, PNG or WEBP · Max 5MB
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <!-- PROFILE FORM -->
+
+        <div class="profile-form">
+
+
+          <!-- FULL NAME -->
+
+          <div class="form-group">
+
+            <label>
+              FULL NAME
+            </label>
+
+            <input
+              type="text"
+              [value]="fullName()"
+              (input)="fullName.set($any($event.target).value)"
+              placeholder="Enter your full name"
+              autocomplete="name"
+            />
+
+          </div>
+
+
+          <!-- EMAIL -->
+
+          <div class="form-group">
+
+            <label>
+              EMAIL ADDRESS
+            </label>
+
+            <input
+              type="email"
+              [value]="email()"
+              readonly
+              autocomplete="email"
+            />
+
+            <small class="input-note">
+              Your email is managed by your account.
+            </small>
+
+          </div>
+
+
+          <!-- EXAM TYPE -->
+
+          <div class="form-group">
+
+            <label>
+              EXAM TYPE
+            </label>
+
+            <select
+              [value]="examType()"
+              (change)="examType.set($any($event.target).value)">
+
+              <option value="JAMB">
+                JAMB
+              </option>
+
+              <option value="UTME">
+                UTME
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         SECURITY
+    ==================================================== -->
+
+    <section class="settings-section">
+
+      <div class="section-title">
+
+        <div>
+
+          <span>
+            SECURITY
+          </span>
+
+          <h3>
+            Protect your
+            <strong>account.</strong>
+          </h3>
+
+        </div>
+
+        <span class="section-label">
+          PASSWORD
+        </span>
+
+      </div>
+
+
+      <div class="security-card">
+
+
+        <div class="security-heading">
+
+          <div class="security-icon">
+            🔐
+          </div>
+
+          <div>
+
+            <strong>
+              Change password
+            </strong>
+
+            <span>
+              Verify your current password before creating
+              a new one.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="password-grid">
+
+
+          <!-- CURRENT -->
+
+          <div class="form-group">
+
+            <label>
+              CURRENT PASSWORD
+            </label>
+
+            <div class="password-input">
+
+              <input
+                [type]="showCurrentPassword() ? 'text' : 'password'"
+                [value]="currentPassword()"
+                (input)="currentPassword.set($any($event.target).value)"
+                placeholder="Enter current password"
+                autocomplete="current-password"
+              />
+
+              <button
+                type="button"
+                (click)="toggleCurrentPassword()">
+
+                {{ showCurrentPassword() ? 'Hide' : 'Show' }}
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- NEW -->
+
+          <div class="form-group">
+
+            <label>
+              NEW PASSWORD
+            </label>
+
+            <div class="password-input">
+
+              <input
+                [type]="showNewPassword() ? 'text' : 'password'"
+                [value]="newPassword()"
+                (input)="newPassword.set($any($event.target).value)"
+                placeholder="Enter new password"
+                autocomplete="new-password"
+              />
+
+              <button
+                type="button"
+                (click)="toggleNewPassword()">
+
+                {{ showNewPassword() ? 'Hide' : 'Show' }}
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- CONFIRM -->
+
+          <div class="form-group">
+
+            <label>
+              CONFIRM NEW PASSWORD
+            </label>
+
+            <div class="password-input">
+
+              <input
+                [type]="showConfirmPassword() ? 'text' : 'password'"
+                [value]="confirmPassword()"
+                (input)="confirmPassword.set($any($event.target).value)"
+                placeholder="Confirm new password"
+                autocomplete="new-password"
+              />
+
+              <button
+                type="button"
+                (click)="toggleConfirmPassword()">
+
+                {{ showConfirmPassword() ? 'Hide' : 'Show' }}
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="security-note">
+
+          <span>
+            ✓
+          </span>
+
+          Your current password will be verified securely
+          before your new password is saved.
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         APPEARANCE
+    ==================================================== -->
+
+    <section class="settings-section">
+
+      <div class="section-title">
+
+        <div>
+
+          <span>
+            APPEARANCE
+          </span>
+
+          <h3>
+            Choose your
+            <strong>experience.</strong>
+          </h3>
+
+        </div>
+
+        <span class="section-label">
+          THEME
+        </span>
+
+      </div>
+
+
+      <div class="appearance-card">
+
+        <div class="appearance-info">
+
+          <div class="appearance-icon">
+            ◐
+          </div>
+
+          <div>
+
+            <strong>
+              Theme
+            </strong>
+
+            <span>
+              Choose how JAMB300+ looks on your device.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="theme-options">
+
+
+          <!-- LIGHT -->
+
+          <button
+            type="button"
+            class="theme-option"
+            [class.selected]="theme() === 'light'"
+            (click)="setTheme('light')">
+
+            <span class="theme-icon">
+              ☀
+            </span>
+
+            <span>
+              Light
+            </span>
+
+            @if (theme() === 'light') {
+              <b>✓</b>
+            }
+
+          </button>
+
+
+          <!-- DARK -->
+
+          <button
+            type="button"
+            class="theme-option"
+            [class.selected]="theme() === 'dark'"
+            (click)="setTheme('dark')">
+
+            <span class="theme-icon">
+              ☾
+            </span>
+
+            <span>
+              Dark
+            </span>
+
+            @if (theme() === 'dark') {
+              <b>✓</b>
+            }
+
+          </button>
+
+
+          <!-- SYSTEM -->
+
+          <button
+            type="button"
+            class="theme-option"
+            [class.selected]="theme() === 'system'"
+            (click)="setTheme('system')">
+
+            <span class="theme-icon">
+              ◉
+            </span>
+
+            <span>
+              System
+            </span>
+
+            @if (theme() === 'system') {
+              <b>✓</b>
+            }
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         STUDY PREFERENCES
+    ==================================================== -->
+
+    <section class="settings-section">
+
+      <div class="section-title">
+
+        <div>
+
+          <span>
+            STUDY PREFERENCES
+          </span>
+
+          <h3>
+            Keep your
+            <strong>goal visible.</strong>
+          </h3>
+
+        </div>
+
+        <span class="section-label">
+          JAMB300+
+        </span>
+
+      </div>
+
+
+      <div class="goal-card">
+
+        <div class="goal-info">
+
+          <div class="goal-icon">
+            🎯
+          </div>
+
+          <div>
+
+            <strong>
+              Target score
+            </strong>
+
+            <span>
+              Set the score you're working toward.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="target-control">
+
+          <input
+            type="number"
+            min="100"
+            max="400"
+            [value]="targetScore()"
+            (input)="updateTargetScore($any($event.target).value)"
+          />
+
+          <span>
+            / 400
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         SAVE
+    ==================================================== -->
+
+    <div class="save-area">
+
+      <button
+        type="button"
+        class="save-button"
+        [disabled]="saving()"
+        (click)="saveSettings()">
+
+        @if (saving()) {
+
+          <span class="button-spinner">
+            ⟳
+          </span>
+
+          Saving...
+
+        } @else {
+
+          Save Changes
+
+          <span>
+            →
+          </span>
+
+        }
+
+      </button>
+
+    </div>
+
+  }
+
+</div>

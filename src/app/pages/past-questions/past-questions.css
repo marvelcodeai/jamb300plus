@@ -1,0 +1,400 @@
+
+/* =========================
+   HOST
+========================= */
+
+:host {
+  display: block;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.pq-page {
+  min-height: calc(100vh - 76px);
+  padding: 32px;
+  background: #f7f8fb;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.pq-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 34px 38px;
+  margin-bottom: 34px;
+
+  border-radius: 20px;
+
+  background: #0A2342;
+  color: #ffffff;
+
+  overflow: hidden;
+}
+
+.hero-content {
+  max-width: 650px;
+}
+
+.hero-label {
+  display: inline-block;
+
+  margin-bottom: 10px;
+
+  color: #FFB400;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.hero-content h1 {
+  margin: 0 0 9px;
+
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.7px;
+}
+
+.hero-content p {
+  max-width: 570px;
+
+  margin: 0;
+
+  color: #d5deea;
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+
+/* =========================
+   HERO ICON
+========================= */
+
+.hero-icon {
+  width: 82px;
+  height: 82px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 22px;
+
+  background: rgba(255, 180, 0, 0.12);
+  border: 1px solid rgba(255, 180, 0, 0.3);
+}
+
+.hero-icon span {
+  color: #FFB400;
+
+  font-size: 34px;
+  font-weight: 900;
+}
+
+
+/* =========================
+   YEARS SECTION
+========================= */
+
+.years-section {
+  width: 100%;
+}
+
+
+/* =========================
+   SECTION HEADER
+========================= */
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+}
+
+.section-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #FFB400;
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.3px;
+}
+
+.section-header h2 {
+  margin: 0 0 5px;
+
+  color: #0A2342;
+
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.section-header p {
+  margin: 0;
+
+  color: #737983;
+
+  font-size: 13px;
+}
+
+.year-total {
+  padding: 9px 14px;
+
+  border-radius: 20px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+
+  color: #0A2342;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+/* =========================
+   YEARS GRID
+========================= */
+
+.years-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 15px;
+}
+
+
+/* =========================
+   YEAR CARD
+========================= */
+
+.year-card {
+  min-height: 105px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #e6e8ec;
+  border-radius: 15px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.year-card:hover {
+  transform: translateY(-3px);
+
+  border-color: #FFB400;
+
+  box-shadow:
+    0 9px 24px rgba(10, 35, 66, 0.08);
+}
+
+
+/* =========================
+   YEAR ICON
+========================= */
+
+.year-icon {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background: #f5f5f5;
+
+  font-size: 19px;
+}
+
+
+/* =========================
+   YEAR INFO
+========================= */
+
+.year-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+
+  min-width: 0;
+}
+
+.year-info span {
+  color: #8a919c;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+}
+
+.year-info strong {
+  color: #0A2342;
+
+  font-size: 21px;
+  font-weight: 900;
+}
+
+
+/* =========================
+   ARROW
+========================= */
+
+.year-arrow {
+  margin-left: auto;
+
+  color: #0A2342;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.year-card:hover .year-arrow {
+  color: #FFB400;
+  transform: translateX(4px);
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1100px) {
+
+  .years-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================
+   SMALL TABLET
+========================= */
+
+@media (max-width: 800px) {
+
+  .pq-page {
+    padding: 25px;
+  }
+
+  .years-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+  .pq-page {
+    padding: 20px;
+  }
+
+  .pq-hero {
+    padding: 26px 24px;
+
+    border-radius: 17px;
+  }
+
+  .hero-content h1 {
+    font-size: 27px;
+  }
+
+  .hero-content p {
+    font-size: 13px;
+  }
+
+  .hero-icon {
+    width: 60px;
+    height: 60px;
+
+    border-radius: 17px;
+  }
+
+  .hero-icon span {
+    font-size: 25px;
+  }
+
+  .section-header {
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .years-grid {
+    grid-template-columns: 1fr;
+
+    gap: 11px;
+  }
+
+  .year-card {
+    min-height: 88px;
+  }
+
+}
+
+
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media (max-width: 420px) {
+
+  .pq-hero {
+    padding: 23px 20px;
+  }
+
+  .hero-icon {
+    display: none;
+  }
+
+  .section-header {
+    flex-direction: column;
+  }
+
+}

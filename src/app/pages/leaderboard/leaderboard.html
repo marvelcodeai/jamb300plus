@@ -1,0 +1,340 @@
+<div class="leaderboard-page">
+
+  <!-- =====================================================
+       HERO
+  ====================================================== -->
+
+  <section class="leaderboard-hero">
+
+    <div class="hero-text">
+
+      <span class="eyebrow">
+        JAMB300+ WEEKLY TEST
+      </span>
+
+      <h2>
+        The
+        <span>leaderboard.</span>
+      </h2>
+
+      <p>
+        See how you rank against other students in this
+        week's test. Keep practicing and push your score higher.
+      </p>
+
+    </div>
+
+    <div class="trophy">
+      🏆
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       TOOLBAR
+  ====================================================== -->
+
+  <div class="leaderboard-toolbar">
+
+    <div>
+
+      <strong>
+        Weekly Rankings
+      </strong>
+
+      <span>
+        {{ totalParticipants() }}
+        {{ totalParticipants() === 1 ? 'participant' : 'participants' }}
+      </span>
+
+    </div>
+
+    <button
+      type="button"
+      class="period-button"
+      (click)="loadLeaderboard()">
+
+      <span>
+        Week {{ weekNumber() }}
+      </span>
+
+      <span class="arrow">
+        ↻
+      </span>
+
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       LEADERBOARD CARD
+  ====================================================== -->
+
+  <div class="leaderboard-card">
+
+
+    <!-- ===================================================
+         LOADING
+    ==================================================== -->
+
+    @if (loading()) {
+
+      <div class="leaderboard-message">
+
+        <div class="empty-icon">
+          ⟳
+        </div>
+
+        <strong>
+          Loading leaderboard...
+        </strong>
+
+        <p>
+          We're getting the latest rankings.
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- ===================================================
+         ERROR
+    ==================================================== -->
+
+    @else if (errorMessage()) {
+
+      <div class="leaderboard-message error-message">
+
+        <strong>
+          Unable to load leaderboard
+        </strong>
+
+        <p>
+          {{ errorMessage() }}
+        </p>
+
+        <button
+          type="button"
+          (click)="loadLeaderboard()">
+
+          Try Again
+
+        </button>
+
+      </div>
+
+    }
+
+
+    <!-- ===================================================
+         LEADERBOARD CONTENT
+    ==================================================== -->
+
+    @else {
+
+      @if (leaderboard().length > 0) {
+
+        <!-- TABLE HEADER -->
+
+        <div class="leaderboard-head">
+
+          <span>
+            RANK
+          </span>
+
+          <span>
+            STUDENT
+          </span>
+
+          <span>
+            SCORE
+          </span>
+
+        </div>
+
+
+        <!-- REAL LEADERBOARD -->
+
+        <div class="leaderboard-list">
+
+          @for (
+            student of leaderboard();
+            track student.userId
+          ) {
+
+            <div
+              class="leaderboard-row"
+              [class.current-user]="
+                student.userId === currentUserId()
+              ">
+
+              <!-- RANK -->
+
+              <div class="rank-cell">
+
+                <div
+                  class="rank-number"
+                  [class.top-rank]="student.rank <= 3">
+
+                  {{ getMedal(student.rank) }}
+
+                </div>
+
+              </div>
+
+
+              <!-- STUDENT -->
+
+              <div class="student-cell">
+
+                <div class="student-avatar">
+
+                  {{ getInitials(student.name) }}
+
+                </div>
+
+                <div class="student-details">
+
+                  <strong>
+                    {{ student.name }}
+                  </strong>
+
+                  @if (
+                    student.userId === currentUserId()
+                  ) {
+
+                    <small>
+                      YOU
+                    </small>
+
+                  }
+
+                </div>
+
+              </div>
+
+
+              <!-- SCORE -->
+
+              <div class="score-cell">
+
+                <strong>
+                  {{ student.score }}/{{ student.totalQuestions }}
+                </strong>
+
+                <span>
+                  {{ student.percentage }}%
+                </span>
+
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      } @else {
+
+        <!-- EMPTY STATE -->
+
+        <div class="empty-leaderboard">
+
+          <div class="empty-icon">
+            🏆
+          </div>
+
+          <h3>
+            No rankings yet.
+          </h3>
+
+          <p>
+            Complete this week's test to appear on
+            the leaderboard.
+          </p>
+
+          <a routerLink="/weekly-test">
+
+            Take Weekly Test
+
+            <span>
+              →
+            </span>
+
+          </a>
+
+        </div>
+
+      }
+
+    }
+
+  </div>
+
+
+  <!-- =====================================================
+       YOUR RANK
+  ====================================================== -->
+
+  @if (
+    !loading() &&
+    !errorMessage() &&
+    currentUserRank() !== null
+  ) {
+
+    <div class="your-rank">
+
+      <!-- ICON -->
+
+      <div class="rank-icon">
+        #
+      </div>
+
+
+      <!-- RANK INFO -->
+
+      <div class="rank-info">
+
+        <span>
+          YOUR RANK
+        </span>
+
+        <strong>
+          #{{ currentUserRank() }}
+        </strong>
+
+      </div>
+
+
+      <!-- SCORE -->
+
+      <div class="rank-score">
+
+        <span>
+          YOUR SCORE
+        </span>
+
+        <strong>
+          {{ currentUserScore() }}
+        </strong>
+
+      </div>
+
+
+      <!-- NOTE -->
+
+      <div class="rank-note">
+
+        {{ currentUserPercentage() }}%
+        overall performance
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

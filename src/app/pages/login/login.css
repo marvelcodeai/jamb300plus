@@ -1,0 +1,581 @@
+/* =========================================
+   JAMB300PLUS LOGIN
+========================================= */
+
+.login-page {
+  min-height: 100vh;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  background: #ffffff;
+
+  color: #0A2342;
+}
+
+
+/* =========================================
+   BRAND PANEL
+========================================= */
+
+.brand-panel {
+  position: relative;
+
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+
+  padding: clamp(35px, 6vw, 80px);
+
+  overflow: hidden;
+
+  background: #0A2342;
+}
+
+.brand-panel::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  right: -250px;
+  bottom: -250px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 180, 0, 0.18);
+}
+
+.brand-panel::after {
+  content: "";
+
+  position: absolute;
+
+  width: 300px;
+  height: 300px;
+
+  left: -170px;
+  top: -150px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 180, 0, 0.05);
+}
+
+.brand-content {
+  position: relative;
+
+  z-index: 2;
+
+  width: min(540px, 100%);
+
+  margin: auto;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logo,
+.mobile-logo {
+  font-size: 25px;
+
+  font-weight: 800;
+
+  letter-spacing: -1.5px;
+
+  color: #ffffff;
+}
+
+.logo span,
+.mobile-logo span {
+  color: #FFB400;
+}
+
+
+/* =========================================
+   BRAND MESSAGE
+========================================= */
+
+.brand-message {
+  margin-top: clamp(100px, 14vh, 160px);
+}
+
+.eyebrow,
+.welcome-label {
+  display: block;
+
+  color: #FFB400;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.8px;
+}
+
+.brand-message h1 {
+  max-width: 600px;
+
+  margin-top: 18px;
+
+  color: #ffffff;
+
+  font-size: clamp(45px, 5vw, 70px);
+
+  line-height: 1;
+
+  letter-spacing: -4px;
+
+  font-weight: 800;
+}
+
+.brand-message h1 span {
+  color: #FFB400;
+}
+
+.brand-message p {
+  max-width: 440px;
+
+  margin-top: 25px;
+
+  color: rgba(255, 255, 255, 0.62);
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================
+   BRAND FOOTER
+========================================= */
+
+.brand-footer {
+  display: flex;
+
+  gap: 18px;
+
+  margin-top: 80px;
+
+  color: rgba(255, 255, 255, 0.35);
+
+  font-size: 10px;
+}
+
+.brand-footer span + span {
+  color: #FFB400;
+}
+
+
+/* =========================================
+   LOGIN PANEL
+========================================= */
+
+.login-panel {
+  min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: clamp(30px, 5vw, 60px);
+}
+
+.login-container {
+  width: min(410px, 100%);
+}
+
+
+/* =========================================
+   MOBILE LOGO
+========================================= */
+
+.mobile-logo {
+  display: none;
+}
+
+
+/* =========================================
+   LOGIN HEADER
+========================================= */
+
+.login-header h2 {
+  margin-top: 10px;
+
+  color: #0A2342;
+
+  font-size: clamp(28px, 3vw, 36px);
+
+  line-height: 1.15;
+
+  letter-spacing: -1.5px;
+}
+
+.login-header p {
+  max-width: 390px;
+
+  margin-top: 10px;
+
+  color: #8a929d;
+
+  font-size: 12px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.login-form {
+  margin-top: 32px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #0A2342;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================
+   PASSWORD HEADER
+========================================= */
+
+.password-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+}
+
+.password-header a {
+  color: #0A2342;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.password-header a:hover {
+  color: #FFB400;
+}
+
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.form-group input {
+  width: 100%;
+
+  height: 50px;
+
+  box-sizing: border-box;
+
+  padding: 0 15px;
+
+  border: 1px solid #dfe3e7;
+
+  border-radius: 6px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #0A2342;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  transition: 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #0A2342;
+
+  box-shadow:
+    0 0 0 3px rgba(10, 35, 66, 0.06);
+}
+
+.form-group input::placeholder {
+  color: #adb4bc;
+}
+
+
+/* =========================================
+   ERRORS
+========================================= */
+
+.error-message {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #d93025;
+
+  font-size: 9px;
+}
+
+.form-group input.ng-invalid.ng-touched {
+  border-color: #d93025;
+
+  background: #fffafa;
+}
+
+
+/* =========================================
+   REMEMBER
+========================================= */
+
+.remember {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #7f8894;
+
+  font-size: 10px;
+
+  cursor: pointer;
+}
+
+.remember input {
+  width: 14px;
+
+  height: 14px;
+
+  accent-color: #FFB400;
+}
+
+
+/* =========================================
+   LOGIN BUTTON
+========================================= */
+
+.login-button {
+  width: 100%;
+
+  height: 51px;
+
+  margin-top: 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  border: none;
+
+  border-radius: 6px;
+
+  background: #FFB400;
+
+  color: #0A2342;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(255, 180, 0, 0.25);
+}
+
+.login-button:active {
+  transform: translateY(0);
+}
+
+.login-button span {
+  font-size: 15px;
+}
+
+
+/* =========================================
+   REGISTER
+========================================= */
+
+.register-prompt {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 5px;
+
+  margin-top: 25px;
+
+  color: #8c949e;
+
+  font-size: 10px;
+}
+
+.register-prompt a {
+  color: #0A2342;
+
+  font-weight: 800;
+
+  text-decoration: none;
+}
+
+.register-prompt a:hover {
+  color: #FFB400;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.login-footer {
+  margin-top: 50px;
+
+  text-align: center;
+
+  color: #b2b8bf;
+
+  font-size: 8px;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+  .brand-panel {
+    padding: 40px;
+  }
+
+  .login-panel {
+    padding: 35px;
+  }
+
+  .brand-message h1 {
+    font-size: clamp(40px, 5vw, 56px);
+
+    letter-spacing: -3px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .login-page {
+    display: block;
+
+    min-height: 100vh;
+  }
+
+  .brand-panel {
+    display: none;
+  }
+
+  .login-panel {
+    min-height: 100vh;
+
+    padding: 30px 22px;
+
+    align-items: flex-start;
+  }
+
+  .login-container {
+    width: 100%;
+
+    max-width: 440px;
+
+    margin: auto;
+  }
+
+  .mobile-logo {
+    display: block;
+
+    margin-bottom: 65px;
+
+    color: #0A2342;
+
+    font-size: 25px;
+
+    font-weight: 800;
+  }
+
+  .mobile-logo span {
+    color: #FFB400;
+  }
+
+  .login-header h2 {
+    font-size: 30px;
+  }
+
+  .login-header p {
+    font-size: 11px;
+  }
+
+}
+
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 380px) {
+
+  .login-panel {
+    padding: 25px 18px;
+  }
+
+  .mobile-logo {
+    margin-bottom: 50px;
+  }
+
+  .login-header h2 {
+    font-size: 27px;
+  }
+
+  .form-group input,
+  .login-button {
+    height: 48px;
+  }
+
+}

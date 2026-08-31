@@ -1,0 +1,520 @@
+/* =====================================================
+   JAMB300+ WEEKLY TEST
+   PAGE CONTENT ONLY
+   SIDEBAR + GLOBAL HEADER ARE HANDLED BY LAYOUT
+===================================================== */
+
+:host {
+  display: block;
+  min-height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.test-page {
+  width: 100%;
+  min-height: 100%;
+
+  background: #f5f5f5;
+
+  color: #0a2342;
+
+  font-family:
+    Inter,
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  padding: 45px;
+}
+
+
+/* =====================================================
+   TEST HEADER
+===================================================== */
+
+.test-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  color: #ffb400;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+.test-header h2 {
+  margin: 10px 0 0;
+
+  font-size: clamp(30px, 4vw, 46px);
+
+  line-height: 1;
+
+  letter-spacing: -2px;
+}
+
+.test-header h2 span {
+  color: #ffb400;
+}
+
+.test-header p {
+  max-width: 530px;
+
+  margin: 15px 0 0;
+
+  color: #89919b;
+
+  font-size: 11px;
+
+  line-height: 1.7;
+}
+
+.week-badge {
+  min-width: 105px;
+
+  padding: 16px;
+
+  border-radius: 10px;
+
+  background: #0a2342;
+
+  text-align: center;
+}
+
+.week-badge span {
+  display: block;
+
+  color: rgba(255, 255, 255, 0.5);
+
+  font-size: 7px;
+
+  letter-spacing: 1px;
+}
+
+.week-badge strong {
+  display: block;
+
+  margin: 3px 0;
+
+  color: #ffb400;
+
+  font-size: 25px;
+}
+
+.week-badge small {
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 7px;
+}
+
+
+/* =====================================================
+   TEST OVERVIEW
+===================================================== */
+
+.test-overview {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 15px;
+
+  margin-bottom: 18px;
+}
+
+.overview-card {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 18px;
+
+  border: 1px solid #e8e8e8;
+
+  border-radius: 10px;
+
+  background: #fff;
+}
+
+.overview-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 8px;
+
+  background: #fff6dc;
+
+  color: #ffb400;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.overview-card span {
+  display: block;
+
+  color: #9ca3aa;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.overview-card strong {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 18px;
+}
+
+.overview-card small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #b2b7bd;
+
+  font-size: 7px;
+}
+
+
+/* =====================================================
+   MAIN TEST CARD
+===================================================== */
+
+.test-card {
+  min-height: 310px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 60px;
+
+  padding: 45px;
+
+  border-radius: 13px;
+
+  background: #0a2342;
+
+  overflow: hidden;
+
+  position: relative;
+}
+
+.test-illustration {
+  width: 200px;
+  height: 200px;
+
+  position: relative;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.test-icon {
+  width: 85px;
+  height: 85px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #ffb400;
+
+  color: #0a2342;
+
+  font-size: 35px;
+  font-weight: 900;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+.circle-one,
+.circle-two {
+  position: absolute;
+
+  border: 1px solid rgba(255, 180, 0, 0.2);
+
+  border-radius: 50%;
+}
+
+.circle-one {
+  width: 170px;
+  height: 170px;
+}
+
+.circle-two {
+  width: 125px;
+  height: 125px;
+}
+
+.empty-content {
+  max-width: 560px;
+}
+
+.small-label {
+  color: #ffb400;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+.empty-content h3 {
+  margin: 10px 0 0;
+
+  color: #fff;
+
+  font-size: clamp(24px, 3vw, 34px);
+
+  line-height: 1.1;
+
+  letter-spacing: -1px;
+}
+
+.empty-content h3 span {
+  color: #ffb400;
+}
+
+.empty-content p {
+  max-width: 520px;
+
+  margin: 14px 0 0;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  font-size: 10px;
+
+  line-height: 1.8;
+}
+
+.test-button {
+  height: 42px;
+
+  margin-top: 22px;
+
+  padding: 0 20px;
+
+  border: none;
+
+  border-radius: 6px;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  color: rgba(255, 255, 255, 0.4);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   HOW IT WORKS
+===================================================== */
+
+.how-section {
+  margin-top: 40px;
+}
+
+.section-heading > span {
+  color: #ffb400;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+.section-heading h3 {
+  margin: 7px 0 20px;
+
+  font-size: 22px;
+
+  letter-spacing: -0.7px;
+}
+
+.section-heading strong {
+  color: #ffb400;
+}
+
+.steps {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 15px;
+}
+
+.step {
+  display: flex;
+
+  gap: 14px;
+
+  padding: 20px;
+
+  border: 1px solid #e8e8e8;
+
+  border-radius: 10px;
+
+  background: #fff;
+}
+
+.step-number {
+  color: #ffb400;
+
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.step strong {
+  font-size: 10px;
+}
+
+.step p {
+  margin: 5px 0 0;
+
+  color: #9199a1;
+
+  font-size: 8px;
+
+  line-height: 1.6;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 950px) {
+
+  .test-page {
+    padding: 35px 28px;
+  }
+
+  .test-card {
+    gap: 35px;
+
+    padding: 35px;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+  .test-page {
+    padding: 30px 20px;
+  }
+
+  .test-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .test-header h2 {
+    font-size: 34px;
+  }
+
+  .test-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .test-card {
+    min-height: auto;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    padding: 30px;
+  }
+
+  .test-illustration {
+    width: 130px;
+    height: 130px;
+  }
+
+  .circle-one {
+    width: 120px;
+    height: 120px;
+  }
+
+  .circle-two {
+    width: 90px;
+    height: 90px;
+  }
+
+  .test-icon {
+    width: 60px;
+    height: 60px;
+
+    font-size: 25px;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL PHONES
+===================================================== */
+
+@media (max-width: 400px) {
+
+  .test-page {
+    padding: 25px 15px;
+  }
+
+  .test-header h2 {
+    font-size: 30px;
+  }
+
+  .test-card {
+    padding: 24px;
+  }
+
+  .empty-content h3 {
+    font-size: 25px;
+  }
+
+}

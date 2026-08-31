@@ -1,0 +1,747 @@
+<div class="test-page">
+
+  <!-- =====================================================
+       PAGE HEADER
+  ====================================================== -->
+
+  <section class="test-header">
+
+    <div>
+
+      <span class="eyebrow">
+        WEEKLY CHALLENGE
+      </span>
+
+      <h2>
+        Test your
+        <span>knowledge.</span>
+      </h2>
+
+      <p>
+        Take the weekly JAMB challenge, track your score
+        and see how you rank against other students.
+      </p>
+
+    </div>
+
+    <div class="week-badge">
+
+      <span>WEEK</span>
+
+      <strong>
+        {{ weeklyTest()?.week_number || '01' }}
+      </strong>
+
+      <small>
+        {{ isTestActive() ? 'Available now' : 'Coming soon' }}
+      </small>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       LOADING
+  ====================================================== -->
+
+  <section
+    class="test-card"
+    *ngIf="loadingTest()">
+
+    <div class="test-illustration">
+
+      <div class="circle-one"></div>
+
+      <div class="test-icon">
+        ...
+      </div>
+
+      <div class="circle-two"></div>
+
+    </div>
+
+    <div class="empty-content">
+
+      <span class="small-label">
+        WEEKLY TEST
+      </span>
+
+      <h3>
+        Loading
+        <span>challenge...</span>
+      </h3>
+
+      <p>
+        We're checking whether this week's JAMB
+        challenge is available.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       ERROR
+  ====================================================== -->
+
+  <section
+    class="test-card"
+    *ngIf="!loadingTest() && errorMessage()">
+
+    <div class="test-illustration">
+
+      <div class="circle-one"></div>
+
+      <div class="test-icon">
+        !
+      </div>
+
+      <div class="circle-two"></div>
+
+    </div>
+
+    <div class="empty-content">
+
+      <span class="small-label">
+        SOMETHING WENT WRONG
+      </span>
+
+      <h3>
+        We couldn't load
+        <span>the challenge.</span>
+      </h3>
+
+      <p>
+        {{ errorMessage() }}
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       TEST NOT AVAILABLE
+       DEFAULT STATE WHEN is_active = false
+  ====================================================== -->
+
+  <ng-container
+    *ngIf="
+      !loadingTest() &&
+      !errorMessage() &&
+      !isTestActive()
+    ">
+
+    <!-- OVERVIEW -->
+
+    <section class="test-overview">
+
+      <!-- QUESTIONS -->
+
+      <div class="overview-card">
+
+        <div class="overview-icon">
+          ?
+        </div>
+
+        <div>
+
+          <span>
+            QUESTIONS
+          </span>
+
+          <strong>
+            —
+          </strong>
+
+          <small>
+            Not available yet
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- TIME -->
+
+      <div class="overview-card">
+
+        <div class="overview-icon">
+          ◷
+        </div>
+
+        <div>
+
+          <span>
+            TIME LIMIT
+          </span>
+
+          <strong>
+            —
+          </strong>
+
+          <small>
+            Not available yet
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- SCORE -->
+
+      <div class="overview-card">
+
+        <div class="overview-icon">
+          ★
+        </div>
+
+        <div>
+
+          <span>
+            YOUR SCORE
+          </span>
+
+          <strong>
+            —
+          </strong>
+
+          <small>
+            No attempt yet
+          </small>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- NOT AVAILABLE CARD -->
+
+    <section class="test-card">
+
+      <div class="test-illustration">
+
+        <div class="circle-one"></div>
+
+        <div class="test-icon">
+          ✓
+        </div>
+
+        <div class="circle-two"></div>
+
+      </div>
+
+
+      <div class="empty-content">
+
+        <span class="small-label">
+          WEEKLY TEST
+        </span>
+
+        <h3>
+          Your next challenge is
+          <span>coming soon.</span>
+        </h3>
+
+        <p>
+          The weekly test hasn't been released yet.
+          Once it is available, you'll be able to answer
+          questions, submit your test and instantly see
+          your score.
+        </p>
+
+        <button
+          type="button"
+          class="test-button"
+          disabled>
+
+          Test Not Available
+
+        </button>
+
+      </div>
+
+    </section>
+
+  </ng-container>
+
+
+  <!-- =====================================================
+       ACTIVE TEST
+       ONLY SHOWS WHEN is_active = true
+  ====================================================== -->
+
+  <ng-container
+    *ngIf="
+      !loadingTest() &&
+      !errorMessage() &&
+      isTestActive()
+    ">
+
+    <!-- TEST OVERVIEW -->
+
+    <section class="test-overview">
+
+      <!-- QUESTIONS -->
+
+      <div class="overview-card">
+
+        <div class="overview-icon">
+          ?
+        </div>
+
+        <div>
+
+          <span>
+            QUESTIONS
+          </span>
+
+          <strong>
+            {{ calculatedQuestionCount || 180 }}
+          </strong>
+
+          <small>
+            60 English + 40 × 3
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- TIME -->
+
+      <div class="overview-card">
+
+        <div class="overview-icon">
+          ◷
+        </div>
+
+        <div>
+
+          <span>
+            TIME LIMIT
+          </span>
+
+          <strong>
+            {{ testDuration }}
+          </strong>
+
+          <small>
+            {{ testDurationMinutesValue }} minutes
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- SUBJECTS -->
+
+      <div class="overview-card">
+
+        <div class="overview-icon">
+          ✓
+        </div>
+
+        <div>
+
+          <span>
+            SUBJECTS
+          </span>
+
+          <strong>
+            {{ selectedSubjectCount }}/4
+          </strong>
+
+          <small>
+            English + 3 more
+          </small>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         SUBJECT SELECTION
+    ==================================================== -->
+
+    <section class="test-card">
+
+      <div class="test-illustration">
+
+        <div class="circle-one"></div>
+
+        <div class="test-icon">
+          ✓
+        </div>
+
+        <div class="circle-two"></div>
+
+      </div>
+
+
+      <div class="empty-content">
+
+        <span class="small-label">
+          STEP 01 · SUBJECT SELECTION
+        </span>
+
+        <h3>
+          Build your
+          <span>test.</span>
+        </h3>
+
+        <p>
+          Use of English is automatically included with
+          60 questions. Choose three additional subjects,
+          with 40 questions from each.
+        </p>
+
+
+        <!-- SELECTION STATUS -->
+
+        <div
+          style="
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+          ">
+
+          <span
+            style="
+              display: inline-flex;
+              align-items: center;
+              padding: 8px 12px;
+              border-radius: 6px;
+              background: rgba(255,180,0,0.12);
+              color: #ffb400;
+              font-size: 9px;
+              font-weight: 800;
+            ">
+
+            {{ selectedSubjectCount }}/4 SELECTED
+
+          </span>
+
+
+          <span
+            *ngIf="!allSubjectsSelected"
+            style="
+              color: rgba(255,255,255,0.45);
+              font-size: 9px;
+            ">
+
+            Choose
+            {{ 3 - additionalSubjectCount }}
+            more
+
+          </span>
+
+
+          <span
+            *ngIf="allSubjectsSelected"
+            style="
+              color: #ffb400;
+              font-size: 9px;
+              font-weight: 800;
+            ">
+
+            READY TO START ✓
+
+          </span>
+
+        </div>
+
+
+        <!-- SUBJECT GRID -->
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(
+              2,
+              minmax(150px, 1fr)
+            );
+            gap: 10px;
+            margin-top: 20px;
+            width: 100%;
+          ">
+
+          <button
+            type="button"
+            *ngFor="let subject of subjects()"
+            (click)="toggleSubject(subject)"
+            [disabled]="
+              !isSubjectSelected(subject.id)
+              && !canSelectMoreSubjects
+            "
+            [style.background]="
+              isSubjectSelected(subject.id)
+                ? '#ffb400'
+                : 'rgba(255,255,255,0.06)'
+            "
+            [style.color]="
+              isSubjectSelected(subject.id)
+                ? '#0a2342'
+                : 'rgba(255,255,255,0.75)'
+            "
+            [style.border-color]="
+              isSubjectSelected(subject.id)
+                ? '#ffb400'
+                : 'rgba(255,255,255,0.12)'
+            "
+            [style.cursor]="
+              isEnglish(subject)
+                ? 'default'
+                : (
+                    canSelectMoreSubjects ||
+                    isSubjectSelected(subject.id)
+                      ? 'pointer'
+                      : 'not-allowed'
+                  )
+            "
+            style="
+              min-height: 48px;
+              padding: 10px 12px;
+              border-width: 1px;
+              border-style: solid;
+              border-radius: 7px;
+              text-align: left;
+              transition: 0.2s ease;
+            ">
+
+            <span
+              style="
+                display: block;
+                font-size: 10px;
+                font-weight: 800;
+              ">
+
+              {{ subject.subject_name }}
+
+            </span>
+
+
+            <span
+              style="
+                display: block;
+                margin-top: 4px;
+                font-size: 8px;
+                opacity: 0.65;
+              ">
+
+              {{ getQuestionCount(subject) }} questions
+
+              <span *ngIf="isEnglish(subject)">
+                · Compulsory
+              </span>
+
+            </span>
+
+          </button>
+
+        </div>
+
+
+        <!-- SELECTED SUBJECT SUMMARY -->
+
+        <div
+          *ngIf="selectedSubjects.length > 0"
+          style="
+            margin-top: 20px;
+            width: 100%;
+          ">
+
+          <span
+            style="
+              color: rgba(255,255,255,0.4);
+              font-size: 7px;
+              font-weight: 800;
+              letter-spacing: 1px;
+            ">
+
+            YOUR TEST
+
+          </span>
+
+
+          <div
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              gap: 7px;
+              margin-top: 8px;
+            ">
+
+            <span
+              *ngFor="let subject of selectedSubjects"
+              style="
+                padding: 7px 9px;
+                border-radius: 5px;
+                background: rgba(255,255,255,0.08);
+                color: rgba(255,255,255,0.8);
+                font-size: 8px;
+                font-weight: 700;
+              ">
+
+              {{ subject.subject_name }}
+
+              ·
+
+              {{ getQuestionCount(subject) }}
+
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- START BUTTON -->
+
+        <button
+          type="button"
+          class="test-button"
+          [disabled]="!canStartTest"
+          (click)="continueToTest()"
+          [style.background]="
+            canStartTest
+              ? '#ffb400'
+              : 'rgba(255,255,255,0.1)'
+          "
+          [style.color]="
+            canStartTest
+              ? '#0a2342'
+              : 'rgba(255,255,255,0.4)'
+          "
+          [style.cursor]="
+            canStartTest
+              ? 'pointer'
+              : 'not-allowed'
+          "
+          style="
+            border: none;
+            transition: 0.2s ease;
+          ">
+
+          <span *ngIf="!canStartTest">
+            Select 4 Subjects
+          </span>
+
+          <span *ngIf="canStartTest">
+            Continue to Instructions →
+          </span>
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         HOW IT WORKS
+    ==================================================== -->
+
+    <section class="how-section">
+
+      <div class="section-heading">
+
+        <span>
+          HOW IT WORKS
+        </span>
+
+        <h3>
+          Your weekly
+          <strong>challenge.</strong>
+        </h3>
+
+      </div>
+
+
+      <div class="steps">
+
+        <div class="step">
+
+          <div class="step-number">
+            01
+          </div>
+
+          <div>
+
+            <strong>
+              Choose your subjects
+            </strong>
+
+            <p>
+              English is compulsory. Select three
+              additional JAMB subjects.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="step">
+
+          <div class="step-number">
+            02
+          </div>
+
+          <div>
+
+            <strong>
+              Take the test
+            </strong>
+
+            <p>
+              Answer 180 questions within the
+              two-hour time limit.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="step">
+
+          <div class="step-number">
+            03
+          </div>
+
+          <div>
+
+            <strong>
+              Get your result
+            </strong>
+
+            <p>
+              Submit your test and see your score
+              and performance instantly.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </ng-container>
+
+</div>

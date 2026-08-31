@@ -1,0 +1,250 @@
+<section class="subjects-content">
+
+  <!-- =========================
+       PAGE INTRO
+  ========================== -->
+
+  <section class="intro">
+
+    <div class="intro-text">
+
+      <span class="eyebrow">
+        YOUR JAMB SUBJECTS
+      </span>
+
+      <h1>
+        Choose your
+        <span>subject.</span>
+      </h1>
+
+      <p>
+        Select a subject to explore your JAMB preparation
+        materials, topics and practice questions.
+      </p>
+
+    </div>
+
+
+    <div class="target-badge">
+
+      <strong>
+        300<span>+</span>
+      </strong>
+
+      <small>
+        Target Score
+      </small>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       LOADING
+  ========================== -->
+
+  @if (loading()) {
+
+    <section class="subjects-state">
+
+      <div class="state-icon">
+        ⟳
+      </div>
+
+      <h3>
+        Loading subjects...
+      </h3>
+
+      <p>
+        We're getting your JAMB subjects ready.
+      </p>
+
+    </section>
+
+  }
+
+
+  <!-- =========================
+       ERROR
+  ========================== -->
+
+  @if (!loading() && errorMessage()) {
+
+    <section class="subjects-state error-state">
+
+      <div class="state-icon">
+        !
+      </div>
+
+      <h3>
+        Unable to load subjects
+      </h3>
+
+      <p>
+        {{ errorMessage() }}
+      </p>
+
+      <button
+        type="button"
+        (click)="loadSubjects()">
+
+        Try Again
+
+      </button>
+
+    </section>
+
+  }
+
+
+  <!-- =========================
+       SUBJECT GRID
+  ========================== -->
+
+  @if (
+    !loading() &&
+    !errorMessage() &&
+    subjects().length > 0
+  ) {
+
+    <section class="subject-grid">
+
+      @for (
+        subject of subjects();
+        track subject.id
+      ) {
+
+        <a
+          class="subject-card"
+          [routerLink]="[
+            '/subjects',
+            subject.id
+          ]"
+        >
+
+          <!-- CARD TOP -->
+
+          <div class="card-top">
+
+            <div class="subject-icon">
+
+              {{ getIcon(subject.subject_name) }}
+
+            </div>
+
+
+            <span class="subject-number">
+
+              {{ subjectNumber(subject.subject_name) }}
+
+            </span>
+
+          </div>
+
+
+          <!-- CARD CONTENT -->
+
+          <div class="subject-info">
+
+            <span>
+              SUBJECT
+            </span>
+
+            <h2>
+              {{ subject.subject_name }}
+            </h2>
+
+            <p>
+              {{ getDescription(subject.subject_name) }}
+            </p>
+
+          </div>
+
+
+          <!-- CARD FOOTER -->
+
+          <div class="card-footer">
+
+            <span>
+              Explore topics
+            </span>
+
+            <span class="arrow">
+              →
+            </span>
+
+          </div>
+
+        </a>
+
+      }
+
+    </section>
+
+  }
+
+
+  <!-- =========================
+       NO SUBJECTS
+  ========================== -->
+
+  @if (
+    !loading() &&
+    !errorMessage() &&
+    subjects().length === 0
+  ) {
+
+    <section class="subjects-state">
+
+      <div class="state-icon">
+        ∅
+      </div>
+
+      <h3>
+        No subjects available
+      </h3>
+
+      <p>
+        Subjects will appear here once they are added.
+      </p>
+
+    </section>
+
+  }
+
+
+  <!-- =========================
+       BOTTOM INFORMATION
+  ========================== -->
+
+  @if (
+    !loading() &&
+    !errorMessage() &&
+    subjects().length > 0
+  ) {
+
+    <section class="subjects-footer">
+
+      <div class="footer-icon">
+        ✦
+      </div>
+
+      <div>
+
+        <strong>
+          Your JAMB preparation starts here.
+        </strong>
+
+        <p>
+          Choose a subject and explore the topics
+          available for your preparation.
+        </p>
+
+      </div>
+
+    </section>
+
+  }
+
+</section>

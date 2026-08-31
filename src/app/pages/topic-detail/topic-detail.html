@@ -1,0 +1,179 @@
+<section class="topic-detail-page">
+
+  <!-- =========================
+       BACK
+  ========================== -->
+
+  <a
+    [routerLink]="backLink"
+    class="back-link"
+  >
+    ← Back to topics
+  </a>
+
+
+  <!-- =========================
+       LOADING
+  ========================== -->
+
+  @if (loading()) {
+
+    <div class="state-message">
+      Loading...
+    </div>
+
+  }
+
+
+  <!-- =========================
+       ERROR
+  ========================== -->
+
+  @if (!loading() && errorMessage()) {
+
+    <div class="state-message error">
+      {{ errorMessage() }}
+    </div>
+
+  }
+
+
+  <!-- =========================
+       TOPIC
+  ========================== -->
+
+  @if (
+    !loading() &&
+    !errorMessage() &&
+    topic()
+  ) {
+
+    <section class="topic-header">
+
+      <div class="topic-header-content">
+
+        <span class="eyebrow">
+          JAMB TOPIC
+        </span>
+
+        <h1>
+          {{ topic()!.topic_name }}
+        </h1>
+
+        <p>
+          Master this topic and build the knowledge
+          you need to reach your 300+ target.
+        </p>
+
+      </div>
+
+
+      <!-- PRACTICE BUTTON -->
+
+      <a
+        [routerLink]="practiceLink"
+        class="practice-button"
+      >
+
+        <span class="practice-icon">
+          ✓
+        </span>
+
+        <span>
+          Practice Questions
+        </span>
+
+        <span class="practice-arrow">
+          →
+        </span>
+
+      </a>
+
+    </section>
+
+
+    <!-- =========================
+         LESSON
+    ========================== -->
+
+    <section class="lesson-content">
+
+      <div class="lesson-heading">
+
+        <span class="eyebrow">
+          LESSON
+        </span>
+
+        <h2>
+          Learn {{ topic()!.topic_name }}
+        </h2>
+
+        <p>
+          Study the explanation below before
+          attempting the practice questions.
+        </p>
+
+      </div>
+
+
+      <!-- FUTURE NOTES -->
+
+      <div class="lesson-placeholder">
+
+        <div class="placeholder-icon">
+          📖
+        </div>
+
+        <div>
+
+          <h3>
+            Lesson content coming soon
+          </h3>
+
+          <p>
+            The explanation, examples, formulas and
+            important JAMB points for this topic will
+            be added here.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- PRACTICE CTA -->
+
+      <div class="practice-cta">
+
+        <div>
+
+          <span class="eyebrow">
+            READY?
+          </span>
+
+          <h3>
+            Test what you've learned
+          </h3>
+
+          <p>
+            Practice JAMB questions from this topic
+            and see how well you understand it.
+          </p>
+
+        </div>
+
+
+        <a
+          [routerLink]="practiceLink"
+          class="practice-cta-button"
+        >
+          Practice Questions →
+        </a>
+
+      </div>
+
+    </section>
+
+  }
+
+</section>

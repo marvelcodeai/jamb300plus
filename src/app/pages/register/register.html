@@ -1,0 +1,275 @@
+<div class="register-page">
+
+  <!-- BRAND PANEL -->
+
+  <section class="brand-panel">
+
+
+<div class="brand-content">
+
+  <div class="logo">
+    Jamb<span>300+</span>
+  </div>
+
+  <div class="brand-message">
+
+    <span class="eyebrow">
+      START YOUR JOURNEY
+    </span>
+
+    <h1>
+      Build your path to
+      <span>300+</span>.
+    </h1>
+
+    <p>
+      Create your account and get access to
+      JAMB preparation tools, weekly tests,
+      performance tracking and leaderboard.
+    </p>
+
+  </div>
+
+  <div class="brand-footer">
+    <span>Learn.</span>
+    <span>Practice.</span>
+    <span>Achieve.</span>
+  </div>
+
+</div>
+
+
+  </section>
+
+  <!-- REGISTER PANEL -->
+
+  <section class="register-panel">
+
+
+<div class="register-container">
+
+  <!-- MOBILE LOGO -->
+  <div class="mobile-logo">
+    Jamb<span>300+</span>
+  </div>
+
+
+  <!-- HEADER -->
+  <div class="register-header">
+
+    <span class="register-label">
+      CREATE ACCOUNT
+    </span>
+
+    <h2>
+      Start your JAMB journey
+    </h2>
+
+    <p>
+      Create your account and start preparing
+      for JAMB with JAMB300Plus.
+    </p>
+
+  </div>
+
+
+  <!-- SUCCESS MESSAGE -->
+  @if (registrationSuccess) {
+
+    <div class="success-message">
+
+      Registration successful!
+      Redirecting you to sign in...
+
+    </div>
+
+  }
+
+
+  <!-- GENERAL ERROR -->
+  @if (registerError) {
+
+    <div class="error-message register-error">
+
+      {{ registerError }}
+
+    </div>
+
+  }
+
+
+  <!-- FORM -->
+  <form
+    class="register-form"
+    (ngSubmit)="onRegister()"
+  >
+
+    <!-- FULL NAME -->
+    <div class="form-group">
+
+      <label for="fullName">
+        Full name
+      </label>
+
+      <input
+        id="fullName"
+        name="fullName"
+        type="text"
+        [(ngModel)]="fullName"
+        (blur)="validateFullName()"
+        (input)="fullNameError = ''"
+        placeholder="Enter your full name"
+        autocomplete="name"
+        required
+      >
+
+      @if (fullNameError) {
+
+        <small class="error-message">
+          {{ fullNameError }}
+        </small>
+
+      }
+
+    </div>
+
+
+    <!-- EMAIL -->
+    <div class="form-group">
+
+      <label for="email">
+        Email address
+      </label>
+
+      <input
+        id="email"
+        name="email"
+        type="email"
+        [(ngModel)]="email"
+        (blur)="validateEmail()"
+        (input)="emailError = ''"
+        placeholder="Enter your email address"
+        autocomplete="email"
+        required
+      >
+
+      @if (emailError) {
+
+        <small class="error-message">
+          {{ emailError }}
+        </small>
+
+      }
+
+    </div>
+
+
+    <!-- PASSWORD -->
+    <div class="form-group">
+
+      <label for="password">
+        Password
+      </label>
+
+      <input
+        id="password"
+        name="password"
+        type="password"
+        [(ngModel)]="password"
+        (blur)="validatePassword()"
+        (input)="passwordError = ''"
+        placeholder="Create a password"
+        autocomplete="new-password"
+        minlength="6"
+        required
+      >
+
+      @if (passwordError) {
+
+        <small class="error-message">
+          {{ passwordError }}
+        </small>
+
+      }
+
+    </div>
+
+
+    <!-- CONFIRM PASSWORD -->
+    <div class="form-group">
+
+      <label for="confirmPassword">
+        Confirm password
+      </label>
+
+      <input
+        id="confirmPassword"
+        name="confirmPassword"
+        type="password"
+        [(ngModel)]="confirmPassword"
+        (blur)="validateConfirmPassword()"
+        (input)="confirmPasswordError = ''"
+        placeholder="Confirm your password"
+        autocomplete="new-password"
+        required
+      >
+
+      @if (confirmPasswordError) {
+
+        <small class="error-message">
+          {{ confirmPasswordError }}
+        </small>
+
+      }
+
+    </div>
+
+
+    <!-- BUTTON -->
+    <button
+      type="submit"
+      class="register-button"
+      [disabled]="isLoading"
+    >
+
+      @if (isLoading) {
+
+        Creating account...
+
+      } @else {
+
+        Create JAMB account
+        <span>→</span>
+
+      }
+
+    </button>
+
+  </form>
+
+
+  <!-- LOGIN LINK -->
+  <div class="login-prompt">
+
+    <span>
+      Already have an account?
+    </span>
+
+    <a routerLink="/login">
+      Sign in
+    </a>
+
+  </div>
+
+
+  <!-- FOOTER -->
+  <p class="register-footer">
+    © 2026 Jamb300Plus. All rights reserved.
+  </p>
+
+</div>
+
+
+  </section>
+
+</div>

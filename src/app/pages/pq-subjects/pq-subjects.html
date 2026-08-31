@@ -1,0 +1,209 @@
+<div class="pq-subjects-page">
+
+<button
+ type="button"
+ class="back-button"
+ routerLink="/past-questions">
+
+
+<span class="back-icon">
+  ←
+</span>
+
+<span>
+  Back to Years
+</span>
+
+
+  </button>
+
+  <section class="subjects-hero">
+
+
+<div class="hero-content">
+
+  <span class="hero-label">
+    JAMB300+ • PAST QUESTIONS
+  </span>
+
+  <h1>
+    JAMB {{ year() }}
+  </h1>
+
+  <p>
+    Select a subject to practice past questions
+    from the {{ year() }} examination.
+  </p>
+
+</div>
+
+
+<div class="year-badge">
+  {{ year() }}
+</div>
+
+
+  </section>
+
+  <section class="subjects-section">
+
+
+<div class="section-heading">
+
+  <div>
+
+    <span class="section-label">
+      AVAILABLE SUBJECTS
+    </span>
+
+    <h2>
+      Select a Subject
+    </h2>
+
+    <p>
+      Choose the subject you want to practice.
+    </p>
+
+  </div>
+
+</div>
+
+
+@if (loading()) {
+
+  <div class="state-card">
+
+    <div class="loader"></div>
+
+    <h3>
+      Loading subjects...
+    </h3>
+
+    <p>
+      Checking the question bank for JAMB {{ year() }}.
+    </p>
+
+  </div>
+
+}
+
+
+@else if (errorMessage()) {
+
+  <div class="state-card error-state">
+
+    <div class="state-icon">
+      !
+    </div>
+
+    <h3>
+      Something went wrong
+    </h3>
+
+    <p>
+      {{ errorMessage() }}
+    </p>
+
+    <button
+      type="button"
+      class="return-button"
+      (click)="loadSubjects()">
+
+      Try Again
+
+    </button>
+
+  </div>
+
+}
+
+
+@else if (subjects().length > 0) {
+
+  <div class="subjects-grid">
+
+    @for (
+      subject of subjects();
+      track subject.id
+    ) {
+
+      <button
+        type="button"
+        class="subject-card"
+        [routerLink]="[
+          '/pq-practice',
+          year(),
+          subject.id
+        ]">
+
+        <div class="subject-icon">
+          📚
+        </div>
+
+        <div class="subject-info">
+
+          <span>
+            JAMB {{ year() }}
+          </span>
+
+          <strong>
+            {{ subject.name }}
+          </strong>
+
+        </div>
+
+        <div class="subject-arrow">
+          →
+        </div>
+
+      </button>
+
+    }
+
+  </div>
+
+}
+
+
+@else {
+
+  <div class="state-card">
+
+    <div class="state-icon">
+      📚
+    </div>
+
+    <h3>
+      No questions available yet
+    </h3>
+
+    <p>
+      There are currently no past questions added
+      for JAMB {{ year() }}. Subjects will appear here
+      automatically once questions are added to the
+      question bank.
+    </p>
+
+    <button
+      type="button"
+      class="return-button"
+      routerLink="/past-questions">
+
+      <span>
+        Choose Another Year
+      </span>
+
+      <span>
+        →
+      </span>
+
+    </button>
+
+  </div>
+
+}
+
+
+  </section>
+
+</div>

@@ -1,0 +1,286 @@
+<div class="instructions-page">
+
+  <!-- HEADER -->
+
+  <section class="instructions-header">
+
+    <div>
+
+      <span class="eyebrow">
+        WEEKLY CHALLENGE
+      </span>
+
+      <h1>
+        Before you
+        <span>begin.</span>
+      </h1>
+
+      <p>
+        Read the instructions carefully before starting
+        your weekly JAMB challenge.
+      </p>
+
+    </div>
+
+    <div class="week-card">
+
+      <span>
+        WEEK
+      </span>
+
+      <strong>
+        01
+      </strong>
+
+    </div>
+
+  </section>
+
+
+  <!-- TEST SUMMARY -->
+
+  <section class="summary-grid">
+
+    <div class="summary-card">
+
+      <div class="summary-icon">
+        ?
+      </div>
+
+      <div>
+
+        <span>
+          QUESTIONS
+        </span>
+
+        <strong>
+          {{ questionCount }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon">
+        ◷
+      </div>
+
+      <div>
+
+        <span>
+          TIME LIMIT
+        </span>
+
+        <strong>
+          2 Hours
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon">
+        ★
+      </div>
+
+      <div>
+
+        <span>
+          RESULT
+        </span>
+
+        <strong>
+          Instant
+        </strong>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- MAIN CONTENT -->
+
+  <section class="instructions-card">
+
+    <div class="card-heading">
+
+      <span>
+        TEST INSTRUCTIONS
+      </span>
+
+      <h2>
+        How the challenge works
+      </h2>
+
+    </div>
+
+
+    <div class="rules">
+
+      <div class="rule">
+
+        <div class="rule-number">
+          01
+        </div>
+
+        <div>
+
+          <strong>
+            Answer all questions
+          </strong>
+
+          <p>
+            The test contains 180 questions.
+            Choose the best answer for each question.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="rule">
+
+        <div class="rule-number">
+          02
+        </div>
+
+        <div>
+
+          <strong>
+            You have 2 hours
+          </strong>
+
+          <p>
+            The timer starts immediately when you
+            begin the test and continues until you submit.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="rule">
+
+        <div class="rule-number">
+          03
+        </div>
+
+        <div>
+
+          <strong>
+            You can move between questions
+          </strong>
+
+          <p>
+            Use the Previous and Next buttons to
+            review and change your answers.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="rule">
+
+        <div class="rule-number">
+          04
+        </div>
+
+        <div>
+
+          <strong>
+            Your score appears after submission
+          </strong>
+
+          <p>
+            Once you submit the test, your answers
+            will be marked and your score displayed.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SUBJECT BREAKDOWN -->
+
+    <div class="subject-section">
+
+      <div class="subject-heading">
+
+        <span>
+          TEST BREAKDOWN
+        </span>
+
+        <h3>
+          Questions by subject
+        </h3>
+
+      </div>
+
+
+      <div class="subject-list">
+
+        @for (subject of subjects; track subject.name) {
+
+          <div class="subject-row">
+
+            <span>
+              {{ subject.name }}
+            </span>
+
+            <strong>
+              {{ subject.questions }} questions
+            </strong>
+
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="instructions-actions">
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="goBack()">
+
+        ← Back
+
+      </button>
+
+
+      <button
+        type="button"
+        class="begin-button"
+        (click)="beginTest()">
+
+        Begin Test
+        <span>→</span>
+
+      </button>
+
+    </div>
+
+  </section>
+
+</div>

@@ -1,0 +1,99 @@
+<div class="profile-page">
+
+  <div class="profile-header">
+
+    <div>
+      <span class="profile-label">MY ACCOUNT</span>
+
+      <h1>Profile</h1>
+
+      <p>
+        Manage your JAMB300Plus account information.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="profile-card">
+
+    <div class="profile-avatar">
+      {{ fullName.charAt(0).toUpperCase() }}
+    </div>
+
+    <div class="profile-main">
+
+      <h2>{{ fullName }}</h2>
+
+      <p>{{ email }}</p>
+
+      <span class="candidate-badge">
+        JAMB Candidate
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <div class="details-card">
+
+    <h3>Account information</h3>
+
+    <div class="detail-row">
+
+      <div>
+        <span class="detail-label">
+          Full name
+        </span>
+
+        <strong>
+          {{ fullName }}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="detail-row">
+
+      <div>
+        <span class="detail-label">
+          Email address
+        </span>
+
+        <strong>
+          {{ email }}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="detail-row">
+
+      <div>
+        <span class="detail-label">
+          JAMB goal
+        </span>
+
+        <strong class="goal">
+          {{ goal }}
+        </strong>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <button
+    type="button"
+    class="logout-button"
+    (click)="logout()">
+
+    Log out
+
+  </button>
+
+</div>

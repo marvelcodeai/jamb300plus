@@ -1,0 +1,1027 @@
+<section class="questions-page">
+
+  <!-- =========================
+       BACK
+  ========================== -->
+
+<a
+[routerLink]="backLink"
+class="back-link"
+
+>
+
+
+← Back to topic
+
+
+  </a>
+
+  <!-- =========================
+       LOADING
+  ========================== -->
+
+@if (loading()) {
+
+
+<div class="state-message">
+  Loading questions...
+</div>
+
+
+}
+
+  <!-- =========================
+       ERROR
+  ========================== -->
+
+@if (!loading() && errorMessage()) {
+
+
+<div class="state-message error">
+  {{ errorMessage() }}
+</div>
+
+
+}
+
+  <!-- =========================
+       MAIN CONTENT
+  ========================== -->
+
+@if (!loading() && !errorMessage()) {
+
+
+<!-- =====================================================
+     QUIZ SETUP
+====================================================== -->
+
+@if (!setupComplete() && allQuestions().length > 0) {
+
+  <section class="quiz-container">
+
+    <!-- HEADER -->
+
+    <div class="quiz-header">
+
+      <span class="eyebrow">
+        JAMB PRACTICE
+      </span>
+
+      <h1>
+        Practice Questions
+      </h1>
+
+      <p>
+        Choose how you want to practice before you begin.
+      </p>
+
+    </div>
+
+
+    <!-- MAIN CARD -->
+
+    <div class="question-card">
+
+
+      <!-- =========================
+           AVAILABLE QUESTIONS
+      ========================== -->
+
+      <div class="available-card">
+
+        <div class="available-info">
+
+          <span>
+            AVAILABLE QUESTIONS
+          </span>
+
+          <strong>
+            {{ allQuestions().length }}
+          </strong>
+
+        </div>
+
+        <div class="available-icon">
+          ?
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           QUESTION COUNT
+      ========================== -->
+
+      <div class="setup-section">
+
+        <div class="section-heading">
+
+          <span class="section-label">
+            QUESTION COUNT
+          </span>
+
+          <h2>
+            How many questions?
+          </h2>
+
+          <p>
+            Choose the number of questions you want to attempt.
+          </p>
+
+        </div>
+
+
+        <div class="question-count-grid">
+
+          @for (
+            count of questionOptions;
+            track count
+          ) {
+
+            <button
+              type="button"
+              class="count-button"
+              [class.active]="
+                selectedQuestionCount() === count
+              "
+              (click)="selectQuestionCount(count)"
+            >
+
+              <strong>
+                {{ count }}
+              </strong>
+
+              <span>
+                Questions
+              </span>
+
+            </button>
+
+          }
+
+        </div>
+
+
+        @if (
+          selectedQuestionCount() >
+          allQuestions().length
+        ) {
+
+          <div class="availability-note">
+
+            <span>
+              !
+            </span>
+
+            <p>
+
+              Only
+
+              <strong>
+                {{ allQuestions().length }}
+              </strong>
+
+              questions are available.
+
+              You will practice all
+
+              <strong>
+                {{ allQuestions().length }}
+              </strong>
+
+              available questions.
+
+            </p>
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <!-- =========================
+           PRACTICE MODE
+      ========================== -->
+
+      <div class="setup-section">
+
+        <div class="section-heading">
+
+          <span class="section-label">
+            PRACTICE MODE
+          </span>
+
+          <h2>
+            Choose your mode
+          </h2>
+
+          <p>
+            Select how answers should be displayed.
+          </p>
+
+        </div>
+
+
+        <div class="mode-options">
+
+
+          <!-- STUDY MODE -->
+
+          <button
+            type="button"
+            class="mode-card"
+            [class.active]="mode() === 'study'"
+            (click)="selectStudyMode()"
+          >
+
+            <span class="mode-icon">
+              📖
+            </span>
+
+            <span class="mode-info">
+
+              <strong>
+                Study Mode
+              </strong>
+
+              <span>
+                See the correct answer and explanation
+                immediately after answering.
+              </span>
+
+            </span>
+
+            <span class="radio">
+
+              @if (mode() === 'study') {
+                ✓
+              }
+
+            </span>
+
+          </button>
+
+
+          <!-- EXAM MODE -->
+
+          <button
+            type="button"
+            class="mode-card"
+            [class.active]="mode() === 'exam'"
+            (click)="selectExamMode()"
+          >
+
+            <span class="mode-icon">
+              📝
+            </span>
+
+            <span class="mode-info">
+
+              <strong>
+                Exam Mode
+              </strong>
+
+              <span>
+                Complete the test first. Answers and
+                explanations appear after submission.
+              </span>
+
+            </span>
+
+            <span class="radio">
+
+              @if (mode() === 'exam') {
+                ✓
+              }
+
+            </span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           QUESTION ORDER
+      ========================== -->
+
+      <div class="setup-section">
+
+        <div class="shuffle-row">
+
+          <div>
+
+            <span class="section-label">
+              QUESTION ORDER
+            </span>
+
+            <h2>
+              Shuffle questions
+            </h2>
+
+            <p>
+              Choose whether to keep the normal order
+              or randomize the questions.
+            </p>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="shuffle-toggle"
+            [class.active]="shuffleQuestions()"
+            (click)="toggleShuffle()"
+          >
+
+            <span class="toggle-track">
+
+              <span class="toggle-thumb"></span>
+
+            </span>
+
+            <span class="toggle-label">
+
+              @if (shuffleQuestions()) {
+                Shuffle
+              } @else {
+                Normal
+              }
+
+            </span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- =========================
+           START
+      ========================== -->
+
+      <button
+        type="button"
+        class="primary-button start-button"
+        (click)="startPractice()"
+      >
+
+        @if (mode() === 'study') {
+          Start Study Mode →
+        } @else {
+          Start Exam Mode →
+        }
+
+      </button>
+
+    </div>
+
+  </section>
+
+}
+
+
+<!-- =====================================================
+     EXAM RESULTS
+====================================================== -->
+
+@if (
+  setupComplete() &&
+  mode() === 'exam' &&
+  examFinished()
+) {
+
+  <section class="quiz-container">
+
+    <!-- HEADER -->
+
+    <div class="quiz-header">
+
+      <span class="eyebrow">
+        EXAM COMPLETE
+      </span>
+
+      <h1>
+        Practice Complete
+      </h1>
+
+      <p>
+        Here is your result for this practice session.
+      </p>
+
+    </div>
+
+
+    <!-- RESULT CARD -->
+
+    <div class="question-card results-card">
+
+
+      <!-- SCORE -->
+
+      <div class="result-score">
+
+        <strong>
+          {{ examScore() }}
+        </strong>
+
+        <span>
+          / {{ questions().length }}
+        </span>
+
+      </div>
+
+
+      <!-- SUMMARY -->
+
+      <div class="result-summary">
+
+
+        <div class="summary-item">
+
+          <span>
+            QUESTIONS
+          </span>
+
+          <strong>
+            {{ questions().length }}
+          </strong>
+
+        </div>
+
+
+        <div class="summary-item">
+
+          <span>
+            ANSWERED
+          </span>
+
+          <strong>
+            {{ answeredQuestionCount }}
+          </strong>
+
+        </div>
+
+
+        <div class="summary-item">
+
+          <span>
+            CORRECT
+          </span>
+
+          <strong>
+            {{ examScore() }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- REVIEW -->
+
+      <div class="review-section">
+
+        <div class="section-heading">
+
+          <span class="section-label">
+            REVIEW
+          </span>
+
+          <h2>
+            Review your answers
+          </h2>
+
+        </div>
+
+
+        <div class="exam-review">
+
+          @for (
+            question of questions();
+            track question.id;
+            let i = $index
+          ) {
+
+            <div class="review-item">
+
+              <div class="review-number">
+                {{ i + 1 }}
+              </div>
+
+
+              <div class="review-content">
+
+                <strong class="review-question">
+                  {{ question.question_text }}
+                </strong>
+
+
+                <p>
+
+                  Your answer:
+
+                  <strong>
+                    {{
+                      examAnswers()[question.id]
+                      || 'Not answered'
+                    }}
+                  </strong>
+
+                  <span class="review-divider">
+                    |
+                  </span>
+
+                  Correct answer:
+
+                  <strong>
+                    {{ question.correct_answer }}
+                  </strong>
+
+                </p>
+
+
+                @if (question.explanation) {
+
+                  <div class="explanation">
+
+                    <strong>
+                      Explanation
+                    </strong>
+
+                    <p>
+                      {{ question.explanation }}
+                    </p>
+
+                  </div>
+
+                }
+
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+}
+
+
+<!-- =====================================================
+     ACTIVE QUIZ
+====================================================== -->
+
+@if (
+  setupComplete() &&
+  currentQuestion &&
+  !examFinished()
+) {
+
+  <section class="quiz-container">
+
+
+    <!-- QUIZ HEADER -->
+
+    <div class="quiz-top">
+
+      <div>
+
+        <span class="eyebrow">
+
+          @if (mode() === 'study') {
+            STUDY MODE
+          } @else {
+            EXAM MODE
+          }
+
+        </span>
+
+        <h1>
+          Practice Questions
+        </h1>
+
+      </div>
+
+
+      <div class="progress">
+
+        <strong>
+          {{ questionNumber }}
+        </strong>
+
+        <span>
+          / {{ questions().length }}
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- PROGRESS BAR -->
+
+    <div class="progress-track">
+
+      <div
+        class="progress-fill"
+        [style.width.%]="progress"
+      ></div>
+
+    </div>
+
+
+    <!-- QUESTION CARD -->
+
+    <div class="question-card">
+
+
+      <!-- QUESTION META -->
+
+      <div class="question-meta">
+
+        <span>
+          QUESTION {{ questionNumber }}
+        </span>
+
+
+        @if (currentQuestion.year) {
+
+          <span>
+            JAMB {{ currentQuestion.year }}
+          </span>
+
+        }
+
+      </div>
+
+
+      <!-- QUESTION -->
+
+      <h2>
+        {{ currentQuestion.question_text }}
+      </h2>
+
+
+      <!-- =========================
+           OPTIONS
+      ========================== -->
+
+      <div class="options">
+
+
+        <!-- A -->
+
+        <button
+          type="button"
+          class="option"
+
+          [class.selected]="
+            selectedAnswer() === 'A'
+          "
+
+          [class.correct]="
+            mode() === 'study' &&
+            answered() &&
+            isCorrect('A')
+          "
+
+          [class.wrong]="
+            mode() === 'study' &&
+            answered() &&
+            selectedAnswer() === 'A' &&
+            !isCorrect('A')
+          "
+
+          (click)="selectAnswer('A')"
+        >
+
+          <span class="option-letter">
+            A
+          </span>
+
+          <span>
+            {{ currentQuestion.option_a }}
+          </span>
+
+        </button>
+
+
+        <!-- B -->
+
+        <button
+          type="button"
+          class="option"
+
+          [class.selected]="
+            selectedAnswer() === 'B'
+          "
+
+          [class.correct]="
+            mode() === 'study' &&
+            answered() &&
+            isCorrect('B')
+          "
+
+          [class.wrong]="
+            mode() === 'study' &&
+            answered() &&
+            selectedAnswer() === 'B' &&
+            !isCorrect('B')
+          "
+
+          (click)="selectAnswer('B')"
+        >
+
+          <span class="option-letter">
+            B
+          </span>
+
+          <span>
+            {{ currentQuestion.option_b }}
+          </span>
+
+        </button>
+
+
+        <!-- C -->
+
+        <button
+          type="button"
+          class="option"
+
+          [class.selected]="
+            selectedAnswer() === 'C'
+          "
+
+          [class.correct]="
+            mode() === 'study' &&
+            answered() &&
+            isCorrect('C')
+          "
+
+          [class.wrong]="
+            mode() === 'study' &&
+            answered() &&
+            selectedAnswer() === 'C' &&
+            !isCorrect('C')
+          "
+
+          (click)="selectAnswer('C')"
+        >
+
+          <span class="option-letter">
+            C
+          </span>
+
+          <span>
+            {{ currentQuestion.option_c }}
+          </span>
+
+        </button>
+
+
+        <!-- D -->
+
+        <button
+          type="button"
+          class="option"
+
+          [class.selected]="
+            selectedAnswer() === 'D'
+          "
+
+          [class.correct]="
+            mode() === 'study' &&
+            answered() &&
+            isCorrect('D')
+          "
+
+          [class.wrong]="
+            mode() === 'study' &&
+            answered() &&
+            selectedAnswer() === 'D' &&
+            !isCorrect('D')
+          "
+
+          (click)="selectAnswer('D')"
+        >
+
+          <span class="option-letter">
+            D
+          </span>
+
+          <span>
+            {{ currentQuestion.option_d }}
+          </span>
+
+        </button>
+
+      </div>
+
+
+      <!-- =========================
+           STUDY EXPLANATION
+      ========================== -->
+
+      @if (
+        mode() === 'study' &&
+        answered()
+      ) {
+
+        <div class="explanation">
+
+          <strong>
+
+            @if (
+              isCorrect(selectedAnswer())
+            ) {
+              ✓ Correct!
+            } @else {
+              ✕ Incorrect
+            }
+
+          </strong>
+
+
+          @if (
+            !isCorrect(selectedAnswer())
+          ) {
+
+            <p>
+
+              Correct answer:
+
+              <strong>
+                {{ currentQuestion.correct_answer }}
+              </strong>
+
+            </p>
+
+          }
+
+
+          @if (
+            currentQuestion.explanation
+          ) {
+
+            <p>
+              {{ currentQuestion.explanation }}
+            </p>
+
+          }
+
+        </div>
+
+      }
+
+
+      <!-- =========================
+           EXAM STATUS
+      ========================== -->
+
+      @if (mode() === 'exam') {
+
+        <div class="exam-status">
+
+          <strong>
+            Exam Mode
+          </strong>
+
+          <p>
+            Your answer is recorded.
+            The correct answer and explanation
+            will be shown after you finish the exam.
+          </p>
+
+        </div>
+
+      }
+
+    </div>
+
+
+    <!-- =========================
+         CONTROLS
+    ========================== -->
+
+    <div class="quiz-controls">
+
+
+      <!-- PREVIOUS -->
+
+      <button
+        type="button"
+        class="secondary-button"
+
+        [disabled]="
+          currentIndex() === 0
+        "
+
+        (click)="previousQuestion()"
+      >
+        ← Previous
+      </button>
+
+
+      <!-- STUDY NEXT -->
+
+      @if (
+        mode() === 'study' &&
+        !isLastQuestion
+      ) {
+
+        <button
+          type="button"
+          class="primary-button"
+
+          [disabled]="!answered()"
+
+          (click)="nextQuestion()"
+        >
+          Next Question →
+        </button>
+
+      }
+
+
+      <!-- STUDY FINISH -->
+
+      @if (
+        mode() === 'study' &&
+        isLastQuestion &&
+        answered()
+      ) {
+
+        <button
+          type="button"
+          class="primary-button"
+          (click)="nextQuestion()"
+        >
+          Finish Practice ✓
+        </button>
+
+      }
+
+
+      <!-- EXAM NEXT -->
+
+      @if (
+        mode() === 'exam' &&
+        !isLastQuestion
+      ) {
+
+        <button
+          type="button"
+          class="primary-button"
+
+          [disabled]="!selectedAnswer()"
+
+          (click)="nextQuestion()"
+        >
+          Next Question →
+        </button>
+
+      }
+
+
+      <!-- EXAM FINISH -->
+
+      @if (
+        mode() === 'exam' &&
+        isLastQuestion
+      ) {
+
+        <button
+          type="button"
+          class="primary-button"
+
+          [disabled]="!selectedAnswer()"
+
+          (click)="nextQuestion()"
+        >
+          Finish Exam ✓
+        </button>
+
+      }
+
+    </div>
+
+  </section>
+
+}
+
+
+}
+
+</section>

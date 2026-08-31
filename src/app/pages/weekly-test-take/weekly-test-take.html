@@ -1,0 +1,506 @@
+<div class="take-page"> 
+ 
+  <!-- ===================================================== 
+       LOADING 
+  ====================================================== --> 
+ 
+  <section 
+    class="state-card" 
+    *ngIf="loadingQuestions()"> 
+ 
+    <div class="loader"></div> 
+ 
+    <span class="eyebrow"> 
+      WEEK {{ weekNumber() }} 
+    </span> 
+ 
+    <h2> 
+      Loading your 
+      <span>challenge...</span> 
+    </h2> 
+ 
+    <p> 
+      Preparing your JAMB questions. 
+      Please wait a moment. 
+    </p> 
+ 
+  </section> 
+ 
+ 
+  <!-- ===================================================== 
+       ERROR 
+  ====================================================== --> 
+ 
+  <section 
+    class="state-card" 
+    *ngIf=" 
+      !loadingQuestions() && 
+      errorMessage() 
+    "> 
+ 
+    <div class="error-icon"> 
+      ! 
+    </div> 
+ 
+    <span class="eyebrow"> 
+      WEEK {{ weekNumber() }} 
+    </span> 
+ 
+    <h2> 
+      Test 
+      <span>unavailable.</span> 
+    </h2> 
+ 
+    <p> 
+      {{ errorMessage() }} 
+    </p> 
+ 
+    <button 
+      type="button" 
+      class="secondary-button" 
+      (click)="router.navigate(['/weekly-test'])"> 
+ 
+      Back to Weekly Test 
+ 
+    </button> 
+ 
+  </section> 
+ 
+ 
+  <!-- ===================================================== 
+       ACTIVE TEST 
+  ====================================================== --> 
+ 
+  <ng-container 
+    *ngIf=" 
+      !loadingQuestions() && 
+      !errorMessage() && 
+      questions().length > 0 
+    "> 
+ 
+ 
+    <!-- =================================================== 
+         TOP BAR 
+    ==================================================== --> 
+ 
+    <header class="test-topbar"> 
+ 
+      <div class="brand-area"> 
+ 
+        <span class="eyebrow"> 
+          WEEKLY CHALLENGE 
+        </span> 
+ 
+        <h1> 
+          Week 
+          <span>{{ weekNumber() }}</span> 
+        </h1> 
+ 
+      </div> 
+ 
+ 
+      <!-- TIMER --> 
+ 
+      <div 
+        class="timer" 
+        [class.warning]="timerWarning()"> 
+ 
+        <span class="timer-label"> 
+          TIME LEFT 
+        </span> 
+ 
+        <strong> 
+          {{ formattedTime() }} 
+        </strong> 
+ 
+      </div> 
+ 
+ 
+      <div class="question-progress"> 
+ 
+        <span> 
+          QUESTION 
+        </span> 
+ 
+        <strong> 
+          {{ currentQuestionNumber() }} 
+          / 
+          {{ questions().length }} 
+        </strong> 
+ 
+      </div> 
+ 
+    </header> 
+ 
+ 
+    <!-- =================================================== 
+         PROGRESS BAR 
+    ==================================================== --> 
+ 
+    <div class="progress-wrapper"> 
+ 
+      <div class="progress-track"> 
+ 
+        <div 
+          class="progress-fill" 
+          [style.width.%]="progressPercentage()"> 
+        </div> 
+ 
+      </div> 
+ 
+    </div> 
+ 
+ 
+    <!-- =================================================== 
+         MAIN LAYOUT 
+    ==================================================== --> 
+ 
+    <div class="test-layout"> 
+ 
+ 
+      <!-- ================================================= 
+           QUESTION AREA 
+      ================================================== --> 
+ 
+      <main class="question-area"> 
+ 
+ 
+        <!-- QUESTION HEADER --> 
+ 
+        <div class="question-heading"> 
+ 
+          <div> 
+ 
+            <span class="question-label"> 
+              QUESTION {{ currentQuestionNumber() }} 
+            </span> 
+ 
+            <h2> 
+              Choose the best answer. 
+            </h2> 
+ 
+          </div> 
+ 
+          <div class="answered-count"> 
+ 
+            {{ answeredCount() }} 
+            / 
+            {{ questions().length }} 
+ 
+            <span> 
+              answered 
+            </span> 
+ 
+          </div> 
+ 
+        </div> 
+ 
+ 
+        <!-- QUESTION CARD --> 
+ 
+        <section 
+          class="question-card" 
+          *ngIf="currentQuestion() as question"> 
+ 
+ 
+          <div class="question-number"> 
+            {{ currentQuestionNumber() }} 
+          </div> 
+ 
+ 
+          <div class="question-content"> 
+ 
+            <p class="question-text"> 
+              {{ question.question_text }} 
+            </p> 
+ 
+ 
+            <!-- OPTIONS --> 
+ 
+            <div class="options"> 
+ 
+ 
+              <!-- A --> 
+ 
+              <button 
+                type="button" 
+                class="option" 
+                [class.selected]=" 
+                  isAnswerSelected('A') 
+                " 
+                (click)="selectAnswer('A')"> 
+ 
+                <span class="option-letter"> 
+                  A 
+                </span> 
+ 
+                <span class="option-text"> 
+                  {{ question.option_a }} 
+                </span> 
+ 
+              </button> 
+ 
+ 
+              <!-- B --> 
+ 
+              <button 
+                type="button" 
+                class="option" 
+                [class.selected]=" 
+                  isAnswerSelected('B') 
+                " 
+                (click)="selectAnswer('B')"> 
+ 
+                <span class="option-letter"> 
+                  B 
+                </span> 
+ 
+                <span class="option-text"> 
+                  {{ question.option_b }} 
+                </span> 
+ 
+              </button> 
+ 
+ 
+              <!-- C --> 
+ 
+              <button 
+                type="button" 
+                class="option" 
+                [class.selected]=" 
+                  isAnswerSelected('C') 
+                " 
+                (click)="selectAnswer('C')"> 
+ 
+                <span class="option-letter"> 
+                  C 
+                </span> 
+ 
+                <span class="option-text"> 
+                  {{ question.option_c }} 
+                </span> 
+ 
+              </button> 
+ 
+ 
+              <!-- D --> 
+ 
+              <button 
+                type="button" 
+                class="option" 
+                [class.selected]=" 
+                  isAnswerSelected('D') 
+                " 
+                (click)="selectAnswer('D')"> 
+ 
+                <span class="option-letter"> 
+                  D 
+                </span> 
+ 
+                <span class="option-text"> 
+                  {{ question.option_d }} 
+                </span> 
+ 
+              </button> 
+ 
+ 
+            </div> 
+ 
+          </div> 
+ 
+        </section> 
+ 
+ 
+        <!-- NAVIGATION --> 
+ 
+        <div class="question-actions"> 
+ 
+ 
+          <button 
+            type="button" 
+            class="previous-button" 
+            [disabled]=" 
+              currentQuestionIndex() === 0 
+            " 
+            (click)="previousQuestion()"> 
+ 
+            ← Previous 
+ 
+          </button> 
+ 
+ 
+          <button 
+            type="button" 
+            class="next-button" 
+            *ngIf=" 
+              currentQuestionIndex() < 
+              questions().length - 1 
+            " 
+            (click)="nextQuestion()"> 
+ 
+            Next 
+ 
+            <span> 
+              → 
+            </span> 
+ 
+          </button> 
+ 
+ 
+          <button 
+            type="button" 
+            class="submit-button" 
+            *ngIf=" 
+              currentQuestionIndex() === 
+              questions().length - 1 
+            " 
+            [disabled]="submitting()" 
+            (click)="confirmSubmit()"> 
+ 
+            {{ 
+              submitting() 
+                ? 'Submitting...' 
+                : 'Submit Test' 
+            }} 
+ 
+            <span> 
+              ✓ 
+            </span> 
+ 
+          </button> 
+ 
+        </div> 
+ 
+      </main> 
+ 
+ 
+      <!-- ================================================= 
+           QUESTION NAVIGATOR 
+      ================================================== --> 
+ 
+      <aside class="question-sidebar"> 
+ 
+ 
+        <div class="sidebar-heading"> 
+ 
+          <div> 
+ 
+            <span> 
+              TEST NAVIGATOR 
+            </span> 
+ 
+            <h3> 
+              Questions 
+            </h3> 
+ 
+          </div> 
+ 
+          <strong> 
+            {{ questions().length }} 
+          </strong> 
+ 
+        </div> 
+ 
+ 
+        <!-- LEGEND --> 
+ 
+        <div class="legend"> 
+ 
+          <div> 
+            <span class="legend-dot answered"></span> 
+            Answered 
+          </div> 
+ 
+          <div> 
+            <span class="legend-dot current"></span> 
+            Current 
+          </div> 
+ 
+          <div> 
+            <span class="legend-dot unanswered"></span> 
+            Unanswered 
+          </div> 
+ 
+        </div> 
+ 
+ 
+        <!-- QUESTION NUMBERS --> 
+ 
+        <div class="question-grid"> 
+ 
+          <button 
+            type="button" 
+            *ngFor=" 
+              let question of questions(); 
+              let i = index 
+            " 
+            [class.current]=" 
+              i === currentQuestionIndex() 
+            " 
+            [class.answered]=" 
+              isQuestionAnswered(i) 
+            " 
+            (click)="goToQuestion(i)"> 
+ 
+            {{ i + 1 }} 
+ 
+          </button> 
+ 
+        </div> 
+ 
+ 
+        <!-- SUMMARY --> 
+ 
+        <div class="sidebar-summary"> 
+ 
+          <div> 
+ 
+            <span> 
+              Answered 
+            </span> 
+ 
+            <strong> 
+              {{ answeredCount() }} 
+            </strong> 
+ 
+          </div> 
+ 
+ 
+          <div> 
+ 
+            <span> 
+              Remaining 
+            </span> 
+ 
+            <strong> 
+              {{ unansweredCount() }} 
+            </strong> 
+ 
+          </div> 
+ 
+        </div> 
+ 
+ 
+        <!-- SUBMIT --> 
+ 
+        <button 
+          type="button" 
+          class="sidebar-submit" 
+          [disabled]="submitting()" 
+          (click)="confirmSubmit()"> 
+ 
+          {{ 
+            submitting() 
+              ? 'Submitting...' 
+              : 'Submit Test' 
+          }} 
+ 
+        </button> 
+ 
+      </aside> 
+ 
+    </div> 
+ 
+  </ng-container> 
+ 
+</div>
