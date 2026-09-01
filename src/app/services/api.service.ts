@@ -7,11 +7,47 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
-  private apiUrl = 'http://localhost:3000';
+  // =====================================================
+  // PRODUCTION BACKEND
+  // =====================================================
 
-  constructor(private http: HttpClient) {}
+  private readonly apiUrl =
+    'https://jamb300plus-backend.onrender.com';
+
+  // =====================================================
+  // CONSTRUCTOR
+  // =====================================================
+
+  constructor(
+    private http: HttpClient
+  ) {}
+
+  // =====================================================
+  // TEST BACKEND
+  // =====================================================
 
   testBackend(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/`);
+
+    return this.http.get(
+      `${this.apiUrl}/`
+    );
+  }
+
+  // =====================================================
+  // LOGIN
+  // =====================================================
+
+  login(
+    email: string,
+    password: string
+  ): Observable<any> {
+
+    return this.http.post(
+      `${this.apiUrl}/api/auth/login`,
+      {
+        email,
+        password
+      }
+    );
   }
 }

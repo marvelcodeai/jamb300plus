@@ -1,51 +1,49 @@
 import { Component } from '@angular/core';
-
 import { FormsModule } from '@angular/forms';
-
 import { Router, RouterLink } from '@angular/router';
-
-import { SupabaseService } from '../../services/supabase';
+import { ApiService } from '../../services/api.service';
 
 @Component({
-
   selector: 'app-login',
-
   standalone: true,
-
   imports: [
-
     FormsModule,
-
     RouterLink
-
   ],
-
   templateUrl: './login.html',
-
   styleUrl: './login.css'
-
 })
-
 export class Login {
 
-  email = '';
+  // =====================================================
+  // USER INFORMATION
+  // =====================================================
 
+  email = '';
   password = '';
 
+  // =====================================================
+  // ERRORS
+  // =====================================================
+
   emailError = '';
-
   passwordError = '';
-
   loginError = '';
 
+  // =====================================================
+  // UI STATE
+  // =====================================================
+
   isLoading = false;
+  loginSuccess = false;
+
+  // =====================================================
+  // CONSTRUCTOR
+  // =====================================================
 
   constructor(
-
-    private router: Router,
-
-    private supabaseService: SupabaseService
-
+    private apiService: ApiService,
+    private router: Router
   ) {}
 
   // =====================================================
@@ -53,29 +51,23 @@ export class Login {
   // =====================================================
 
   validateEmail(): void {
+    const cleanEmail = this.email.trim();
 
-    if (!this.email.trim()) {
-
+    if (!cleanEmail) {
       this.emailError = 'Email is required';
-
       return;
-
     }
 
     const emailPattern =
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailPattern.test(this.email.trim())) {
-
+    if (!emailPattern.test(cleanEmail)) {
       this.emailError =
         'Please enter a valid email address';
-
       return;
-
     }
 
     this.emailError = '';
-
   }
 
   // =====================================================
@@ -83,47 +75,32 @@ export class Login {
   // =====================================================
 
   validatePassword(): void {
-
     if (!this.password) {
-
-      this.passwordError =
-        'Password is required';
-
+      this.passwordError = 'Password is required';
       return;
-
-    }
-
-    if (this.password.length < 6) {
-
-      this.passwordError =
-        'Password must be at least 6 characters';
-
-      return;
-
     }
 
     this.passwordError = '';
-
   }
 
   // =====================================================
   // LOGIN
   // =====================================================
 
-  async onLogin(): Promise<void> {
+  onLogin(): void {
 
     // ---------------------------------------------------
-    // RESET ERROR
+    // RESET STATE
     // ---------------------------------------------------
 
     this.loginError = '';
+    this.loginSuccess = false;
 
     // ---------------------------------------------------
-    // VALIDATE
+    // VALIDATE FORM
     // ---------------------------------------------------
 
     this.validateEmail();
-
     this.validatePassword();
 
     // ---------------------------------------------------
@@ -134,9 +111,7 @@ export class Login {
       this.emailError ||
       this.passwordError
     ) {
-
       return;
-
     }
 
     // ---------------------------------------------------
@@ -145,107 +120,191 @@ export class Login {
 
     this.isLoading = true;
 
-    try {
+    // ---------------------------------------------------
+    // CLEAN EMAIL
+    // ---------------------------------------------------
 
-      // -------------------------------------------------
-      // SUPABASE CLIENT
-      // -------------------------------------------------
+    const cleanEmail =
+      this.email.trim().toLowerCase();
 
-      const supabase =
-        this.supabaseService.client;
+    // ---------------------------------------------------
+    // DEBUG
+    // ---------------------------------------------------
 
-      // -------------------------------------------------
-      // LOGIN
-      // -------------------------------------------------
+    console.log('================================');
+    console.log('🔐 LOGIN REQUEST');
+    console.log('================================');
 
-      const {
-        data,
-        error
-      } =
-        await supabase.auth
-          .signInWithPassword({
+    console.log({
+      email: cleanEmail
+    });
 
-            email:
-              this.email.trim().toLowerCase(),
+    // ---------------------------------------------------
+    // SEND LOGIN REQUEST
+    // ---------------------------------------------------
 
-            password:
-              this.password
+    this.apiService
+      .login(
+        cleanEmail,
+        this.password
+      )
+      .subscribe({
 
-          });
+        // ===============================================
+        // SUCCESS
+        // ===============================================
 
-      // -------------------------------------------------
-      // SUPABASE ERROR
-      // -------------------------------------------------
+        next: (response) => {
 
-      if (error) {
+          console.log('================================');
+          console.log('✅ LOGIN RESPONSE');
+          console.log('================================');
 
-        console.error(
-          '❌ SUPABASE LOGIN ERROR:',
-          error
-        );
+          console.log(response);
 
-        this.loginError =
-          error.message ||
-          'Invalid email or password.';
+          this.isLoading = false;
 
-        return;
+          // ------------------------------------------------
+          // CHECK BACKEND RESPONSE
+          // ------------------------------------------------
 
-      }
+          if (!response?.success) {
 
-      // -------------------------------------------------
-      // LOGIN SUCCESS
-      // -------------------------------------------------
+            this.loginError =
+              response?.message ||
+              'Login failed.';
 
-      if (data.session) {
+            return;
+          }
 
-        console.log(
-          '================================'
-        );
+          // ------------------------------------------------
+          // GET ACCESS TOKEN
+          // ------------------------------------------------
 
-        console.log(
-          '✅ LOGIN SUCCESS'
-        );
+          const accessToken =
+            response?.session?.accessToken;
 
-        console.log(
-          'User:',
-          data.user
-        );
+          if (!accessToken) {
 
-        console.log(
-          '================================'
-        );
+            console.error(
+              '❌ Login succeeded but no access token was returned.'
+            );
 
-        // -----------------------------------------------
-        // GO TO HOME
-        // -----------------------------------------------
+            this.loginError =
+              'Login succeeded, but your session could not be created.';
 
-        await this.router.navigate([
-          '/home'
-        ]);
+            return;
+          }
 
-      } else {
+          // ------------------------------------------------
+          // SAVE ACCESS TOKEN
+          // ------------------------------------------------
 
-        this.loginError =
-          'Login failed. Please try again.';
+          localStorage.setItem(
+            'access_token',
+            accessToken
+          );
 
-      }
+          // ------------------------------------------------
+          // SAVE REFRESH TOKEN
+          // ------------------------------------------------
 
-    } catch (error) {
+          if (response?.session?.refreshToken) {
 
-      console.error(
-        '❌ LOGIN SERVER ERROR:',
-        error
-      );
+            localStorage.setItem(
+              'refresh_token',
+              response.session.refreshToken
+            );
+          }
 
-      this.loginError =
-        'Something went wrong. Please try again.';
+          // ------------------------------------------------
+          // SAVE USER INFORMATION
+          // ------------------------------------------------
 
-    } finally {
+          if (response?.user) {
 
-      this.isLoading = false;
+            localStorage.setItem(
+              'current_user',
+              JSON.stringify(response.user)
+            );
+          }
 
-    }
+          // ------------------------------------------------
+          // LOGIN SUCCESS
+          // ------------------------------------------------
 
+          this.loginSuccess = true;
+
+          console.log(
+            '✅ Login successful.'
+          );
+
+          console.log(
+            'Logged in as:',
+            cleanEmail
+          );
+
+          // ------------------------------------------------
+          // NAVIGATE TO HOME
+          // ------------------------------------------------
+
+          setTimeout(() => {
+
+            this.router.navigate([
+              '/home'
+            ]);
+
+          }, 500);
+        },
+
+        // ===============================================
+        // ERROR
+        // ===============================================
+
+        error: (error) => {
+
+          console.error(
+            '================================'
+          );
+
+          console.error(
+            '❌ LOGIN ERROR'
+          );
+
+          console.error(
+            '================================'
+          );
+
+          console.error(
+            'Status:',
+            error?.status
+          );
+
+          console.error(
+            'Status text:',
+            error?.statusText
+          );
+
+          console.error(
+            'URL:',
+            error?.url
+          );
+
+          console.error(
+            'Backend response:',
+            error?.error
+          );
+
+          this.isLoading = false;
+
+          // ------------------------------------------------
+          // BACKEND ERROR MESSAGE
+          // ------------------------------------------------
+
+          this.loginError =
+            error?.error?.message ||
+            'Unable to connect to the server. Please try again.';
+        }
+      });
   }
-
 }
